@@ -1,0 +1,20 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "max-line-length": {
+            "options": [500]
+		},
+		"quotemark": [true, "single", "jsx-double"], 	//	强制使用单引号，jsx中强制双引号
+		"semicolon": [true, "never"],									//	禁用分号
+		"indent":[false, "tabs", 2],									//	tab缩进为2个字符
+		"member-ordering": false,											//	类声明排序
+		"no-console": false,
+		"arrow-parens": false,
+		"ordered-imports": false,											// import声明排序
+		"ban-types": false,
+		"no-string-literal": false,										// disallows obj['property']
+		"variable-name": false,												// 变量名约束
+		"only-arrow-functions": false,
+		"object-literal-sort-keys": false
+    }
+}
