@@ -1,27 +1,46 @@
+const webpack = require('webpack')
 const path = require('path')
 
 module.exports = {
-	mode: 'development',
-	entry: path.resolve(__dirname, './build/index.jsx'),
+	entry: "./src/index.tsx",
 	output: {
-		path: path.resolve(__dirname, './dist'),
-		filename: 'bundle.js'
+			filename: "bundle.js",
+			path: path.resolve(__dirname, "./dist"),
+			publicPath: 'dist'
 	},
+
+	devServer: {
+		contentBase: ".",
+		compress: true,
+		progress: true,
+		historyApiFallback: true,
+		inline: true,
+		hot: true,
+		open: true,
+    port: 9000
+	},
+
+	devtool: "source-map",
+
 	resolve: {
-		extensions: ['.js', '.jsx'],	// import中的路径后缀自动补全
+			extensions: [".ts", ".tsx", ".js", ".json"]
 	},
+
 	module: {
-		rules: [
-			{
-				test: /\.(js|jsx)$/,
-				use: {
-					loader: 'babel-loader',
-					options: {
-						presets: ['es2015', 'react'],
-					}
-				},
-				exclude: /node_modules/
-			}
-		],
-	}
-}
+			rules: [
+					// { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+					{ test: /\.tsx?$/, loader: "ts-loader" },
+					{ enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+			]
+	},
+
+	externals: {
+			"react": "React",
+			"react-dom": "ReactDOM"
+	},
+
+	plugins:[
+		new webpack.HotModuleReplacementPlugin()
+	]
+
+};

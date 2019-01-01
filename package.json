@@ -4,21 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node server/dev",
+    "build": "webpack --mode development --watch",
+    "start": "webpack-dev-server --mode development  --config webpack.config.js --inline --hot",
     "dev-manual": "webpack --config webpack.config.js",
     "tsc-dev": "tsc -w",
-    "tsc-production": "tsc",
-    "wp": "webpack"
+    "tsc-production": "tsc"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.0.11",
     "axios": "^0.18.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",
     "babel-loader": "7",
     "babel-preset-es2015": "^6.24.1",
@@ -28,6 +31,8 @@
     "gulp": "^3.9.1",
     "gulp-shell": "^0.6.5",
     "gulp-tslint": "^8.1.3",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^5.3.2",
     "tslint": "^5.12.0",
     "typescript": "^3.2.2",
     "webpack": "^4.28.2",
