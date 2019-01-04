@@ -1,3 +1,7 @@
+export interface IData {
+	task: string
+}
 export interface todo {
-	taskList: any[],
+	taskList: IData[],
+	getTaskList: () => void,
 }

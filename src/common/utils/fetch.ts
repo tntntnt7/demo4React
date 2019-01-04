@@ -1,14 +1,14 @@
-import axios from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import config from '../config';
 
 class Fetch {
 
-	private _api: any = null;
+	private _api: AxiosInstance;
 
 	constructor() {
-		this._api = axios.create()
-		this._api.default.baseURL = config.apiURL
-		this._api.default.timeout = config.apiTimeout
+		this._api = axios.create({
+			baseURL: config.apiURL
+		})
 	}
 
 	public get = async (path: string): Promise<any> => {
@@ -44,11 +44,11 @@ class Fetch {
 		}
 	}
 
-	public del = async (path: string, data: any):Promise<any> => {
+	public del = async (path: string):Promise<any> => {
 		try {
 			const headers = {}
 			// 设置headers
-			const ret = await this._api.delete(encodeURI(path), data, { headers })
+			const ret = await this._api.delete(encodeURI(path), { headers })
 			return this._resultHandle(ret)
 		} catch (error) {
 			return this._errorHandle(error)

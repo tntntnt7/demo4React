@@ -7,6 +7,8 @@ const fs = require('fs-extra')
 
 gulp.task('default', ['start'])
 
+gulp.task('start', ['clean'], shell.task('yarn start'))
+
 gulp.task('clean', ['tslint'], async () => {
 	await del('./build', { force: true })
 	await del('./dist/bundle.js')

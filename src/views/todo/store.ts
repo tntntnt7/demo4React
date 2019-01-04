@@ -1,14 +1,36 @@
-import { observable, runInAction } from 'mobx'
-import fetch from '../../common/utils/fetch';
+import { observable, runInAction, action } from 'mobx'
+import { IData } from './interface'
+import TodoResource from '../../resources/todo'
 
-export default class Store {
+export class Store {
 	@observable
-	public taskList: any[] = []
+	public taskList: IData[] = []
 
+	@action
 	public getTaskList = async () => {
-		const ret = await fetch.get('path of tasks');
+		console.log('getTaskList')
+		const ret = await TodoResource.getTaskList()
+		console.log('ret => ', ret)
 		runInAction(() => {
-			this.taskList = ret
+			// this.taskList = ret
 		})
+	}
+
+	@action
+	public addTask = async () => {
+		const ret = await TodoResource.addTask
+		runInAction(() => {})
+	}
+
+	@action
+	public deleteTask = async () => {
+		const ret = await TodoResource.deleteTask
+		runInAction(() => {})
+	}
+
+	@action
+	public modifyTask = async () => {
+		const ret = await TodoResource.modifyTask
+		runInAction(() => {})
 	}
 }

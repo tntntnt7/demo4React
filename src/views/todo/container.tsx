@@ -1,17 +1,23 @@
 import * as React from 'react'
-import { todo } from './interface'
-import Todo from './presenter';
+import { observer } from 'mobx-react'
+import Todo from './presenter'
+import { Store } from './store'
 
-export class TodoContainer extends React.Component<todo, {}> {
+@observer
+export class TodoContainer extends React.Component {
+
+	private _store: Store;
 
 	constructor(props: any) {
 		super(props)
+		this._store = new Store()
 	}
 
 	public render(): JSX.Element {
 		return (
 			<Todo
-				task={''}
+				taskList={this._store.taskList}
+				getTaskList={this._store.getTaskList}
 			/>
 		)
 	}
