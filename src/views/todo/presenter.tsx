@@ -2,6 +2,7 @@ import * as React from 'react'
 import { todo } from './interface'
 import { history } from '../../common/utils/history'
 import { observer } from 'mobx-react'
+import './style.scss'
 
 @observer
 export default class Todo extends React.Component<todo, {test: string}> {
