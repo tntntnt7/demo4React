@@ -5,5 +5,3 @@ export interface todo {
 	taskList: IData[],
 	getTaskList: () => void,
 }
-
-////git test 0
