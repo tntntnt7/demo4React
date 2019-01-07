@@ -1,7 +1,8 @@
 import * as React from 'react'
+import { observer } from 'mobx-react'
+import { Button } from '@material-ui/core'
 import { todo } from './interface'
 import { history } from '../../common/utils/history'
-import { observer } from 'mobx-react'
 import './style.scss'
 
 @observer
@@ -24,9 +25,9 @@ export default class Todo extends React.Component<todo, {test: string}> {
 					goback
 				</div>
 				<h2/>
-				<div onClick={() => location.replace('/')}>
-					logOut
-				</div>
+				<Button variant='contained' color='primary' onClick={() => location.replace('/')}>
+					logout
+				</Button>
 			</div>
     )
   }
