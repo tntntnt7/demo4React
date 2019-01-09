@@ -1,5 +1,5 @@
 export interface login {
-	onLoginNameChange: null,
-	onPasswordChange: null,
-	doLogin:null
+	onLoginNameChange: 	null
+	onPasswordChange: 	null
+	doLogin:						null
 }
