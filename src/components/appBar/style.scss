@@ -1,13 +1,21 @@
 .content {
 	flex-grow: 1;
-	.menu {
-		margin-left: -12px;
-		margin-right: 20px;
+
+	.bar {
+		background-color: #2096F3;
+
+		.menu {
+			margin-left: -12px;
+			margin-right: 20px;
+			color: #fff;
+		}
+		.title {
+			flex-grow: 1;
+		}
+		.button {
+			margin-right: 20px;
+			color: #fff;
+		}
 	}
-	.title {
-		flex-grow: 1;
-	}
-	.button {
-		margin-right: 20px;
-	}
+
 }
