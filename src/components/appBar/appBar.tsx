@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { AppBar, Button, Toolbar, Typography, IconButton, Menu, MenuItem } from '@material-ui/core'
-import { Menu as MenuIcon, AccountCircle } from '@material-ui/icons'
+import { AppBar, Button, Toolbar, Typography, IconButton, Menu, MenuItem, InputBase } from '@material-ui/core'
+import { Menu as MenuIcon, AccountCircle, Search as SearchIcon } from '@material-ui/icons'
 import './style.scss'
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
@@ -37,6 +37,18 @@ export default class ActionBar extends React.Component<IActionBar, {}> {
 						<Typography className='title' variant='h6' color='inherit'>
 							{title}
 						</Typography>
+						<div className='search'>
+							<div className='searchIcon'>
+								<SearchIcon/>
+							</div>
+							<InputBase
+								placeholder='Search...'
+								className='input'
+								defaultValue={''}
+								value={''}
+								onChange={() => null}
+							/>
+						</div>
 						<Button className='button' onClick={logout}>logout</Button>
 						<div>
 							<IconButton 
@@ -50,13 +62,13 @@ export default class ActionBar extends React.Component<IActionBar, {}> {
 							<Menu
 								id='menu-appbar'
 								anchorEl={this.anchorEl}
-								anchorOrigin={{
+								anchorOrigin={{						// 锚点 相对于按钮
 									vertical: 'bottom',
 									horizontal: 'center',
 								}}
-								transformOrigin={{
+								transformOrigin={{				// 相对于popover
 									vertical: 'top',
-									horizontal: 'right',
+									horizontal: 'center',
 								}}
 								open={open}
 								onClose={this.handleClose}
@@ -65,9 +77,6 @@ export default class ActionBar extends React.Component<IActionBar, {}> {
 								<MenuItem onClick={logout}>logout</MenuItem>
 							</Menu>
 						</div>
-						<Button className='button' onClick={logout}>logout</Button>
-						<Button className='button' onClick={logout}>logout</Button>
-						<Button className='button' onClick={logout}>logout</Button>
 					</Toolbar>
 				</AppBar>
 			</div>
