@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
-import Todo from './presenter'
+import Home from './presenter'
 import { Store } from './store'
 
 @observer
-export class TodoContainer extends React.Component {
+export class HomeContainer extends React.Component {
 
 	private _store: Store;
 
@@ -15,7 +15,7 @@ export class TodoContainer extends React.Component {
 
 	public render(): JSX.Element {
 		return (
-			<Todo
+			<Home
 				taskList={this._store.taskList}
 				getTaskList={this._store.getTaskList}
 			/>

@@ -11,7 +11,7 @@ export default class Login extends React.Component<login, {test: string}> {
 		}
 	}
 
-	public go = () => history.push('/todo')
+	public go = () => history.push('/home')
 	
 	public forward = () => history.goForward()
 

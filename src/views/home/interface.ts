@@ -1,7 +1,7 @@
 export interface IData {
 	task: string
 }
-export interface todo {
+export interface home {
 	taskList: IData[]
 	getTaskList: () => void
 }
