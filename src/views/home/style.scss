@@ -1,5 +1,5 @@
 $drawerWidth: 240px;
-$drawerWidthClose: 74px;
+$drawerWidthClose: 65px;
 $drawerHeadHeight: 63px;
 
 .content {
@@ -33,7 +33,7 @@ $drawerHeadHeight: 63px;
 	}
 
 	.barDrawerOpen {
-		width: calc(100% - 240px);
+		width: calc(100% - 241px);
 	}
 
 	.drawer {
@@ -55,17 +55,39 @@ $drawerHeadHeight: 63px;
 		}
 	}
 
+	.drawerList {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+		width: $drawerWidthClose;
+		overflow-x: hidden;
+		white-space: nowrap;
+		transition: width 200ms;
+
+		.itemIcon {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: $drawerWidthClose;
+			margin-left: -16px;
+		}
+	}
+
 	.drawerOpen {
 		width: $drawerWidth;
 		.head {
 			width: $drawerWidth;
+			.close {
+				margin-right: 10px;
+			}
 		}
 	}
 
 	.main {
 		display: flex;
 		height: 100%;
-		width: calc(100% - 74px);
+		width: calc(100% - 65px);
 		transition: width 200ms;
 		margin-top: $drawerHeadHeight;
 		margin-left: $drawerWidthClose;
