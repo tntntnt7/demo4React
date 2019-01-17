@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { Button, Drawer, IconButton, Divider, AppBar, Toolbar, Menu, Typography, MenuItem, Badge, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { Menu as MenuIcon, AccountCircle, Search as SearchIcon, ChevronLeft, Inbox as InboxIcon, Mail as MailIcon } from '@material-ui/icons'
+import { Menu as MenuIcon, AccountCircle, Search as SearchIcon, ChevronLeft, Inbox as InboxIcon, Mail as MailIcon, Mail } from '@material-ui/icons'
 import { observer } from 'mobx-react'
 import { observable, action } from 'mobx'
 import { history } from '../../common/utils/history'
 import Search from '../../components/search/search'
 import { home } from './interface'
 import './style.scss'
+import MenuList from '../../components/menuList/menuList';
 
 @observer
 export default class Home extends React.Component<home, {test: string}> {
@@ -119,22 +120,38 @@ export default class Home extends React.Component<home, {test: string}> {
 					{/* TODO: 动态list */}
 					<List className={`drawerList ${this.drawerOpenStyle}`}>
             {['Home', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text} selected={this.selected == text} onClick={this.selectMenu.bind(this, text)}>
-                <ListItemIcon className='itemIcon'>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-					
-					<Divider/>
-					<List className={`drawerList ${this.drawerOpenStyle}`}>
-						{['a', 'b', 'c', 'd'].map((text, index) => (
 							<ListItem button key={text} selected={this.selected == text} onClick={this.selectMenu.bind(this, text)}>
 								<ListItemIcon className='itemIcon'>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
 								<ListItemText primary={text} />
 							</ListItem>
 						))}
-					</List>
+          </List>
+					
+					<Divider/>
+					<MenuList className={`drawerList ${this.drawerOpenStyle}`} data={[
+						{
+							title: 	't1',
+							path:		'/p1',
+							icon: 	<Mail/>,
+						},
+						{
+							title: 	't2',
+							path:		'/p2',
+							icon: 	<Mail/>,
+						},
+						{
+							title: 	't3',
+							path:		'/p3',
+							icon: 	<Mail/>,
+						},
+						{
+							title: 	't4',
+							path:		'/p4',
+							icon: 	<Mail/>,
+							divider: true,
+						},
+					]}/>
+
 				</Drawer>
 				<div className={`main ${this.mainDrawerOpenStyle}`}>
 					<div className={`mainContent`}>
