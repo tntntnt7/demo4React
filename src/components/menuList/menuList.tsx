@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import { List, ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core'
 import './style.scss'
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
@@ -35,11 +35,37 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 
 	public render(): JSX.Element {
 		const { className, data } = this.props
+
+		const indexList = []
+		data.map((cell, index) => {
+			if (cell.divider) {
+				indexList.push(index)
+			}
+		})
 		return (
-			<div>
+			<div className='container'>
 				{
-					data.map((cell, index) => {
-						
+					indexList.map(cell => {
+						<List className={className}>
+							{
+								data.splice(0, cell + 1).map(cell => {
+									return (
+										<ListItem
+											key={cell.title}
+											button
+											selected={this.selected == cell.title}
+											onClick={this.goto.bind(this, cell)}
+										>
+											<ListItemIcon className='itemIcon'>
+												{ cell.icon }
+											</ListItemIcon>
+											<ListItemText>{cell.title}</ListItemText>
+										</ListItem>
+									)
+								})
+							}
+							<Divider/>
+						</List>
 					})
 				}
 			</div>

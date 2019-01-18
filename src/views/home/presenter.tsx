@@ -118,6 +118,27 @@ export default class Home extends React.Component<home, {test: string}> {
 					</div>
 					<Divider/>
 					{/* TODO: 动态list */}
+					<MenuList
+						className={`drawerList ${this.drawerOpenStyle}`}
+						data={[
+							{
+								title: 'a',
+								path: '/',
+								icon: <InboxIcon/>
+							},{
+								title: 'a',
+								path: '/',
+								icon: <InboxIcon/>,
+								divider: true,
+							},{
+								title: 'a',
+								path: '/',
+								icon: <InboxIcon/>
+							},
+						]}
+					/>
+
+
 					<List className={`drawerList ${this.drawerOpenStyle}`}>
             {['Home', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
 							<ListItem button key={text} selected={this.selected == text} onClick={this.selectMenu.bind(this, text)}>
