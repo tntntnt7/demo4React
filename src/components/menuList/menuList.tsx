@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { observer } from 'mobx-react'
+import { action, observable } from 'mobx'
 import { List, ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core'
+import { history } from '../../common/utils/history'
 import './style.scss'
 
 export interface IMenu {
@@ -14,6 +15,7 @@ export interface IMenu {
 export interface IMenuList {
 	className:			string
 	data:						IMenu[][]
+	selected:				(title: string) => void
 }
 
 @observer
@@ -22,13 +24,16 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 
 	@action public goto = (menu: IMenu) => {
 		this.selected = menu.title
-		// TODO 路由
+		this.props.selected(this.selected)
+
+		history.push(menu.path)
 	}
 
 	constructor(props: IMenuList) {
 		super(props)
 		if (props.data.length > 0 && props.data[0].length > 0) {
 			this.selected = props.data[0][0].title
+			history.push(props.data[0][0].path)
 		}
 	}
 
@@ -39,9 +44,9 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 			<div className='container'>
 				{
 					data.map((item, index) => (
-						<div>
+						<div key={index}>
 							{ index > 0 && <Divider/> }
-							{ 
+							{
 								<List className={className}>
 									{ item.map(cell => (
 											<ListItem

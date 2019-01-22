@@ -91,21 +91,6 @@ $drawerHeadHeight: 63px;
 		transition: width 200ms;
 		margin-top: $drawerHeadHeight;
 		margin-left: $drawerWidthClose;
-	
-		.mainContent {
-			flex-grow: 1;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			background-color: cadetblue;
-			overflow-y: auto;
-
-			.test {
-				height: 300px;
-				background-color: green;
-			}
-		}
 	}
 
 	.mainDrawerOpen {

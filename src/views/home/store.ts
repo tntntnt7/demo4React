@@ -1,36 +1,30 @@
-import { observable, runInAction, action } from 'mobx'
-import { IData } from './interface'
-import TodoResource from '../../resources/todo'
+import { observable, action } from 'mobx'
 
 export class Store {
-	@observable
-	public taskList: IData[] = []
+	@observable public title: string = ''
+	@observable public anchorEl: HTMLElement
+	@observable public isDrawerOpen: boolean = false
+	@observable public drawerOpenStyle: string = ''
+	@observable public barDrawerOpenStyle: string = ''
+	@observable public mainDrawerOpenStyle: string = ''
 
-	@action
-	public getTaskList = async () => {
-		console.log('getTaskList')
-		const ret = await TodoResource.getTaskList()
-		console.log('ret => ', ret)
-		runInAction(() => {
-			// this.taskList = ret
-		})
+	@action public changeTitle = (title: string) => {
+		this.title = title
 	}
 
-	@action
-	public addTask = async () => {
-		const ret = await TodoResource.addTask
-		runInAction(() => {})
+	@action public onMenuOpen = event => {
+		this.anchorEl = event.currentTarget
 	}
 
-	@action
-	public deleteTask = async () => {
-		const ret = await TodoResource.deleteTask
-		runInAction(() => {})
+	@action public onMenuClose = _ => {
+		this.anchorEl = null
 	}
 
-	@action
-	public modifyTask = async () => {
-		const ret = await TodoResource.modifyTask
-		runInAction(() => {})
+	@action	public handleDrawer = _ => {
+		this.isDrawerOpen = !this.isDrawerOpen
+		this.barDrawerOpenStyle = this.isDrawerOpen ? 'barDrawerOpen' : ''
+		this.drawerOpenStyle = this.isDrawerOpen ? 'drawerOpen' : ''
+		this.mainDrawerOpenStyle = this.isDrawerOpen ? 'mainDrawerOpen' : ''
 	}
+
 }

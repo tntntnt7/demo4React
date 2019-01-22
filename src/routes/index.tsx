@@ -1,20 +1,26 @@
 import * as React from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
-import { history } from '../common/utils/history'
-import { HomeContainer } from '../views/home';
-import { LoginContainer } from '../views/login';
+import { HomeContainer } from '../views/home'
+import { fragments } from './fragments'
+import NotFound from '../views/notFound'
 
-const NotFound = () => (
-	<div>404</div>
+
+const renderFragments = () => fragments.map((cell, index) => (
+	<Route path={cell.path} component={cell.fragment}/>
+))
+
+const renderHome = ({ match }) => (
+	<HomeContainer>
+		{ renderFragments() }
+		<Route exact path={match.path} component={NotFound}/>
+	</HomeContainer>
 )
 
 export default function Routes(): any {
 	return (
 		<HashRouter>
 			<Switch>
-				<Route exact path='/' component={LoginContainer} />
-				<Route exact path='/home' component={HomeContainer} />
-				<Route component={NotFound}/>
+				<Route path='/' component={renderHome} />
 			</Switch>
 		</HashRouter>
 	)
