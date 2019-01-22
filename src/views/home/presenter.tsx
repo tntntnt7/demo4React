@@ -17,7 +17,6 @@ export default class Home extends React.Component<home, {test: string}> {
 	@observable private drawerOpenStyle: string = ''
 	@observable private mainDrawerOpenStyle: string = ''
 	@observable private anchorEl: HTMLElement
-	@observable private selected: string = 'Home'
 
 	constructor(props: any) {
 		super(props)
@@ -41,10 +40,6 @@ export default class Home extends React.Component<home, {test: string}> {
 		this.barDrawerOpenStyle = this.isDrawerOpen ? 'barDrawerOpen' : ''
 		this.drawerOpenStyle = this.isDrawerOpen ? 'drawerOpen' : ''
 		this.mainDrawerOpenStyle = this.isDrawerOpen ? 'mainDrawerOpen' : ''
-	}
-
-	@action public selectMenu = text => {
-		this.selected = text
 	}
 
 	private logout = _ => {
@@ -117,62 +112,73 @@ export default class Home extends React.Component<home, {test: string}> {
 						</IconButton>
 					</div>
 					<Divider/>
-					{/* TODO: 动态list */}
-					<MenuList
-						className={`drawerList ${this.drawerOpenStyle}`}
-						data={[
-							{
-								title: 'a',
-								path: '/',
-								icon: <InboxIcon/>
-							},{
-								title: 'a',
-								path: '/',
-								icon: <InboxIcon/>,
-								divider: true,
-							},{
-								title: 'a',
-								path: '/',
-								icon: <InboxIcon/>
-							},
-						]}
-					/>
-
-
-					<List className={`drawerList ${this.drawerOpenStyle}`}>
-            {['Home', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-							<ListItem button key={text} selected={this.selected == text} onClick={this.selectMenu.bind(this, text)}>
-								<ListItemIcon className='itemIcon'>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-								<ListItemText primary={text} />
-							</ListItem>
-						))}
-          </List>
-					
-					<Divider/>
 					<MenuList className={`drawerList ${this.drawerOpenStyle}`} data={[
-						{
-							title: 	't1',
-							path:		'/p1',
-							icon: 	<Mail/>,
-						},
-						{
-							title: 	't2',
-							path:		'/p2',
-							icon: 	<Mail/>,
-						},
-						{
-							title: 	't3',
-							path:		'/p3',
-							icon: 	<Mail/>,
-						},
-						{
-							title: 	't4',
-							path:		'/p4',
-							icon: 	<Mail/>,
-							divider: true,
-						},
+						[
+							{
+								title: 	't1',
+								path:		'/p1',
+								icon: 	<Mail/>,
+							},
+							{
+								title: 	't2',
+								path:		'/p2',
+								icon: 	<Mail/>,
+							},
+							{
+								title: 	't3',
+								path:		'/p3',
+								icon: 	<Mail/>,
+							},
+							{
+								title: 	't4',
+								path:		'/p4',
+								icon: 	<Mail/>,
+							},
+						],[
+							{
+								title: 	't5',
+								path:		'/p5',
+								icon: 	<Mail/>,
+							},
+							{
+								title: 	't6',
+								path:		'/p6',
+								icon: 	<Mail/>,
+							},
+						],[
+							{
+								title: 	't7',
+								path:		'/p7',
+								icon: 	<Mail/>,
+							},
+							{
+								title: 	't8',
+								path:		'/p8',
+								icon: 	<Mail/>,
+							},
+							{
+								title: 	't9',
+								path:		'/p9',
+								icon: 	<Mail/>,
+							},
+						],[
+							{
+								title: 	't10',
+								path:		'/p7',
+								icon: 	<Mail/>,
+							},
+							{
+								title: 	't11',
+								path:		'/p8',
+								icon: 	<Mail/>,
+							},
+							{
+								title: 	't12',
+								path:		'/p9',
+								icon: 	<Mail/>,
+							},
+						],
 					]}/>
-
 				</Drawer>
 				<div className={`main ${this.mainDrawerOpenStyle}`}>
 					<div className={`mainContent`}>

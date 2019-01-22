@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { List, ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core'
-import './style.scss'
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
+import { List, ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core'
+import './style.scss'
 
 export interface IMenu {
 	title:			string
@@ -13,12 +13,11 @@ export interface IMenu {
 
 export interface IMenuList {
 	className:			string
-	data:						IMenu[]
+	data:						IMenu[][]
 }
 
 @observer
 export default class MenuList extends React.Component<IMenuList, {}> {
-
 	@observable private selected: string
 
 	@action public goto = (menu: IMenu) => {
@@ -28,68 +27,42 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 
 	constructor(props: IMenuList) {
 		super(props)
-		if (props.data.length > 0) {
-			this.selected = props.data[0].title
+		if (props.data.length > 0 && props.data[0].length > 0) {
+			this.selected = props.data[0][0].title
 		}
 	}
 
 	public render(): JSX.Element {
 		const { className, data } = this.props
 
-		const indexList = []
-		data.map((cell, index) => {
-			if (cell.divider) {
-				indexList.push(index)
-			}
-		})
 		return (
 			<div className='container'>
 				{
-					indexList.map(cell => {
-						<List className={className}>
-							{
-								data.splice(0, cell + 1).map(cell => {
-									return (
-										<ListItem
-											key={cell.title}
-											button
-											selected={this.selected == cell.title}
-											onClick={this.goto.bind(this, cell)}
-										>
-											<ListItemIcon className='itemIcon'>
-												{ cell.icon }
-											</ListItemIcon>
-											<ListItemText>{cell.title}</ListItemText>
-										</ListItem>
-									)
-								})
+					data.map((item, index) => (
+						<div>
+							{ index > 0 && <Divider/> }
+							{ 
+								<List className={className}>
+									{ item.map(cell => (
+											<ListItem
+												key={cell.title}
+												button
+												selected={this.selected == cell.title}
+												onClick={this.goto.bind(this, cell)}
+											>
+												<ListItemIcon className='itemIcon'>
+													{ cell.icon }
+												</ListItemIcon>
+												<ListItemText>{cell.title}</ListItemText>
+											</ListItem>
+										))
+									}
+								</List> 
 							}
-							<Divider/>
-						</List>
-					})
+						</div>
+					))
 				}
 			</div>
 		)
-		
-		
-		// (
-		// 	<List className={className}>
-		// 		{
-		// 			data.map((cell, index) => (
-		// 				<ListItem
-		// 					key={index}
-		// 					button
-		// 					selected={this.selected == cell.title}
-		// 					onClick={this.goto.bind(this, cell)}
-		// 				>
-		// 					<ListItemIcon className='itemIcon'>
-		// 						{ cell.icon }
-		// 					</ListItemIcon>
-		// 					<ListItemText>{cell.title}</ListItemText>
-		// 				</ListItem>
-		// 			))
-		// 		}
-		// 	</List>
-		// )
 	}
 }
