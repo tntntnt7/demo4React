@@ -27,6 +27,8 @@ export class HomeContainer extends React.Component {
 				drawerOpenStyle={this._store.drawerOpenStyle}
 				barDrawerOpenStyle={this._store.barDrawerOpenStyle}
 				mainDrawerOpenStyle={this._store.mainDrawerOpenStyle}
+				getMenuList={this._store.getMenuList}
+				menuList={this._store.menuList}
 			/>
 		)
 	}

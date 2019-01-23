@@ -10,20 +10,16 @@ $drawerWidthClose: 65px;
 	overflow-y: auto;
 	// height: 300px;
 
-	.item {
-		.itemIcon {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: $drawerWidthClose;
-			margin-left: -16px;
-		}
-		.itemIconSelected {
-			.icon {
-				color: white;
-			}
-		}
+	.itemIcon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: $drawerWidthClose;
+		margin-left: -16px;
 	}
-	.itemSelected {
+	.itemIconSelected {
+		.icon {
+			color: white;
+		}
 	}
 }

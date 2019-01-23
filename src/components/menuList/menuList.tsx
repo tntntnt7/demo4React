@@ -6,10 +6,10 @@ import { history } from '../../common/utils/history'
 import './style.scss'
 
 export interface IMenu {
-	title:			string
-	path:				string
-	icon:				React.ReactElement<any>
-	divider?: 	boolean
+	title:				string
+	path:					string
+	icon?:				React.ReactElement<any>
+	subMenuList?: IMenu[]
 }
 
 export interface IMenuList {
@@ -37,6 +37,43 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 		}
 	}
 
+	public renderList = (data: IMenu[]) => {
+		const { className } = this.props
+		return (
+			<List className={className}>
+				{ data.map(cell => {
+						let subList = null
+						if (cell.subMenuList && cell.subMenuList.length > 0) {
+							subList = this.renderList(cell.subMenuList)
+						}
+
+						const selected = this.selected == cell.title						
+						return (
+							<div style={{
+								display: 'flex',
+								flexDirection: 'column',
+								width: '100%'
+							}}>
+								<ListItem
+									key={cell.title}
+									button
+									selected={selected}
+									onClick={this.goto.bind(this, cell)}
+								>
+									<ListItemIcon className={`itemIcon`}>
+										{ cell.icon }
+									</ListItemIcon>
+									<ListItemText inset primary={cell.title}/>
+								</ListItem>
+								{ selected && subList }
+							</div>
+						)
+					})
+				}
+			</List>
+		)
+	}
+
 	public render(): JSX.Element {
 		const { className, data } = this.props
 
@@ -47,26 +84,42 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 						<div key={index}>
 							{ index > 0 && <Divider/> }
 							{
-								<List className={className}>
-									{ item.map(cell => {
-											const selected = this.selected == cell.title
-											return (
-												<ListItem
-													className={`item ${selected && 'itemSelected'}`}
-													key={cell.title}
-													button
-													selected={selected}
-													onClick={this.goto.bind(this, cell)}
-												>
-													<ListItemIcon className={`itemIcon ${selected && 'itemIconSelected'}`}>
-														{ cell.icon }
-													</ListItemIcon>
-													<ListItemText inset primary={cell.title}/>
-												</ListItem>
-											)
-										})
-									}
-								</List> 
+								this.renderList(item)
+								// <List className={className}>
+								// 	{ item.map(cell => {
+								// 			let sub = cell.subMenuList && cell.subMenuList.data.length > 0
+								// 			const selected = this.selected == cell.title
+								// 			return (
+								// 				<div style={{
+								// 					display: 'flex',
+								// 					flexDirection: 'column',
+								// 				}}>
+								// 					<ListItem
+								// 						className={`item ${selected && 'itemSelected'}`}
+								// 						key={cell.title}
+								// 						button
+								// 						selected={selected}
+								// 						onClick={this.goto.bind(this, cell)}
+								// 					>
+								// 						<ListItemIcon className={`itemIcon ${selected && 'itemIconSelected'}`}>
+								// 							{ cell.icon }
+								// 						</ListItemIcon>
+								// 						<ListItemText inset primary={cell.title}/>
+								// 					</ListItem>
+								// 					{ sub && selected && 
+								// 						<SubMenuList
+								// 							title={cell.title}
+								// 							path={cell.path}
+								// 							icon={cell.icon}
+								// 							doSelect={this.goto.bind(this, cell)}
+								// 							selected={selected}
+								// 							subMenuList={cell.subMenuList}
+								// 						/> }
+								// 				</div>
+								// 			)
+								// 		})
+								// 	}
+								// </List> 
 							}
 						</div>
 					))
