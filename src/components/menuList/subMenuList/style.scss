@@ -1,14 +1,13 @@
 $drawerWidthClose: 65px;
 
 .container {
-	flex-grow: 1;
+	flex: 1;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	flex-shrink: 0;
 	white-space: 'nowrap';
 	overflow-y: auto;
-	// height: 300px;
 
 	.item {
 		.itemIcon {

@@ -48,19 +48,23 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 							{ index > 0 && <Divider/> }
 							{
 								<List className={className}>
-									{ item.map(cell => (
-											<ListItem
-												key={cell.title}
-												button
-												selected={this.selected == cell.title}
-												onClick={this.goto.bind(this, cell)}
-											>
-												<ListItemIcon className='itemIcon'>
-													{ cell.icon }
-												</ListItemIcon>
-												<ListItemText>{cell.title}</ListItemText>
-											</ListItem>
-										))
+									{ item.map(cell => {
+											const selected = this.selected == cell.title
+											return (
+												<ListItem
+													className={`item ${selected && 'itemSelected'}`}
+													key={cell.title}
+													button
+													selected={selected}
+													onClick={this.goto.bind(this, cell)}
+												>
+													<ListItemIcon className={`itemIcon ${selected && 'itemIconSelected'}`}>
+														{ cell.icon }
+													</ListItemIcon>
+													<ListItemText inset primary={cell.title}/>
+												</ListItem>
+											)
+										})
 									}
 								</List> 
 							}
