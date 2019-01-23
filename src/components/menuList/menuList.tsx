@@ -21,8 +21,12 @@ export interface IMenuList {
 @observer
 export default class MenuList extends React.Component<IMenuList, {}> {
 	@observable private selected: string
+	@observable private switchMap: Map<string, boolean> = new Map()
 
 	@action public goto = (menu: IMenu) => {
+		const flag = this.switchMap.get(menu.title)
+		this.switchMap.set(menu.title, !flag)
+
 		this.selected = menu.title
 		this.props.selected(this.selected)
 
@@ -42,20 +46,24 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 		return (
 			<List className={className}>
 				{ data.map(cell => {
+						const selected = this.selected == cell.title
+						const hasChild = cell.subMenuList && cell.subMenuList.length > 0
 						let subList = null
-						if (cell.subMenuList && cell.subMenuList.length > 0) {
+						
+						if (hasChild) {
 							subList = this.renderList(cell.subMenuList)
 						}
 
-						const selected = this.selected == cell.title						
 						return (
-							<div style={{
-								display: 'flex',
-								flexDirection: 'column',
-								width: '100%'
-							}}>
+							<div 
+								key={cell.title} 
+								style={{
+									display: 'flex',
+									flexDirection: 'column',
+									width: '100%'
+								}}
+							>
 								<ListItem
-									key={cell.title}
 									button
 									selected={selected}
 									onClick={this.goto.bind(this, cell)}
@@ -64,8 +72,11 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 										{ cell.icon }
 									</ListItemIcon>
 									<ListItemText inset primary={cell.title}/>
+									{ hasChild && `>` }
 								</ListItem>
-								{ selected && subList }
+								<div className={`subList ${!(this.switchMap.has(cell.title) && this.switchMap.get(cell.title)) && 'subListHide'}`}>
+									{ this.switchMap.has(cell.title) && this.switchMap.get(cell.title) && subList }
+								</div>
 							</div>
 						)
 					})
@@ -85,41 +96,6 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 							{ index > 0 && <Divider/> }
 							{
 								this.renderList(item)
-								// <List className={className}>
-								// 	{ item.map(cell => {
-								// 			let sub = cell.subMenuList && cell.subMenuList.data.length > 0
-								// 			const selected = this.selected == cell.title
-								// 			return (
-								// 				<div style={{
-								// 					display: 'flex',
-								// 					flexDirection: 'column',
-								// 				}}>
-								// 					<ListItem
-								// 						className={`item ${selected && 'itemSelected'}`}
-								// 						key={cell.title}
-								// 						button
-								// 						selected={selected}
-								// 						onClick={this.goto.bind(this, cell)}
-								// 					>
-								// 						<ListItemIcon className={`itemIcon ${selected && 'itemIconSelected'}`}>
-								// 							{ cell.icon }
-								// 						</ListItemIcon>
-								// 						<ListItemText inset primary={cell.title}/>
-								// 					</ListItem>
-								// 					{ sub && selected && 
-								// 						<SubMenuList
-								// 							title={cell.title}
-								// 							path={cell.path}
-								// 							icon={cell.icon}
-								// 							doSelect={this.goto.bind(this, cell)}
-								// 							selected={selected}
-								// 							subMenuList={cell.subMenuList}
-								// 						/> }
-								// 				</div>
-								// 			)
-								// 		})
-								// 	}
-								// </List> 
 							}
 						</div>
 					))

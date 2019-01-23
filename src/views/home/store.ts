@@ -6,6 +6,10 @@ const tempMenuList = [[
 	{
 		title: 	'Todo',
 		path:		'/todo',
+	},
+	{
+		title: 	'Test',
+		path:		'/test',
 		subMenuList: [
 			{
 				title: 't1',
@@ -33,11 +37,7 @@ const tempMenuList = [[
 				title: 't2',
 				path: '/',
 			}
-		]
-	},
-	{
-		title: 	'Test',
-		path:		'/test',
+		],
 	},
 ],[
 	{
