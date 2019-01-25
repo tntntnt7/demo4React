@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 import { action, observable } from 'mobx'
-import { List, ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core'
+import { List, ListItem, ListItemIcon, ListItemText, Divider, Collapse } from '@material-ui/core'
 import { history } from '../../common/utils/history'
 import './style.scss'
+import { ExpandLess, ExpandMore } from '@material-ui/icons';
 
 export interface IMenu {
 	title:				string
@@ -18,19 +19,21 @@ export interface IMenuList {
 	selected:				(title: string) => void
 }
 
+/**
+ * 	菜单列表组件,可无限拓展
+ */
 @observer
 export default class MenuList extends React.Component<IMenuList, {}> {
 	@observable private selected: string
 	@observable private switchMap: Map<string, boolean> = new Map()
 
 	@action public goto = (menu: IMenu) => {
+		this.selected != menu.title && history.push(menu.path)
+		
 		const flag = this.switchMap.get(menu.title)
 		this.switchMap.set(menu.title, !flag)
-
 		this.selected = menu.title
 		this.props.selected(this.selected)
-
-		history.push(menu.path)
 	}
 
 	constructor(props: IMenuList) {
@@ -43,14 +46,15 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 
 	public renderList = (data: IMenu[]) => {
 		const { className } = this.props
+
 		return (
-			<List className={className}>
+			<List className={className} disablePadding>
 				{ data.map(cell => {
 						const selected = this.selected == cell.title
 						const hasChild = cell.subMenuList && cell.subMenuList.length > 0
-						const both = this.switchMap.has(cell.title) && this.switchMap.get(cell.title)
+						const expand = this.switchMap.has(cell.title) && this.switchMap.get(cell.title)
+
 						let subList = null
-						
 						if (hasChild) {
 							subList = this.renderList(cell.subMenuList)
 						}
@@ -61,7 +65,7 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 								style={{
 									display: 'flex',
 									flexDirection: 'column',
-									width: '100%'
+									width: '100%',
 								}}
 							>
 								<ListItem
@@ -73,12 +77,16 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 										{ cell.icon }
 									</ListItemIcon>
 									<ListItemText inset primary={cell.title}/>
-									{ hasChild && `>` }
+									{ hasChild && (expand ? <ExpandLess/> : <ExpandMore/>) }
 								</ListItem>
-								<div className={`subList ${!both && 'subListHide'}`}>
-									{/* TODO 子菜单展开动画 */}
-									{ subList } 
-								</div>
+								{ hasChild &&  
+									<Collapse in={expand} timeout='auto' unmountOnExit>
+										<div style={{display: 'flex'}}>
+											<div style={{width: 10}}/>	{/** subList缩进 */}
+											{ subList }
+										</div>
+									</Collapse>
+								}
 							</div>
 						)
 					})

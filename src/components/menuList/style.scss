@@ -14,18 +14,11 @@ $drawerWidthClose: 65px;
 		justify-content: center;
 		align-items: center;
 		width: $drawerWidthClose;
-		margin-left: -16px;
+		// margin-left: -16px;
 	}
 	.itemIconSelected {
 		.icon {
 			color: white;
 		}
-	}
-
-	.subList {
-		transition: display 500ms;
-	}
-	.subListHide {
-		display: none;
 	}
 }

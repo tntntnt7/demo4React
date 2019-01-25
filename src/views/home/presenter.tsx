@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Button, Drawer, IconButton, Divider, AppBar, Toolbar, Menu, Typography, MenuItem, Badge } from '@material-ui/core'
-import { Menu as MenuIcon, AccountCircle, Search as SearchIcon, ChevronLeft, Inbox as InboxIcon, Mail as MailIcon, FormatListNumbered, NotInterested, Build, Mail } from '@material-ui/icons'
+import { Menu as MenuIcon, AccountCircle, ChevronLeft } from '@material-ui/icons'
 import MenuList from '../../components/menuList/menuList'
 import Search from '../../components/search/search'
 import { home, homeState } from './interface'
@@ -122,12 +122,9 @@ export default class Home extends React.Component<home, homeState> {
 						data={menuList}
 						selected={changeTitle}
 					/>
-
 				</Drawer>
 				<div className={`main ${mainDrawerOpenStyle}`}>
-
 					{this.props.children}
-
 				</div>
 			</div>
     )

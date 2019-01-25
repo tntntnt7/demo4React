@@ -12,7 +12,7 @@ const tempMenuList = [[
 		path:		'/test',
 		subMenuList: [
 			{
-				title: 't1',
+				title: 'Star',
 				path: '/',
 				subMenuList: [
 					{
@@ -27,10 +27,7 @@ const tempMenuList = [[
 								path: '/',
 							}			
 						]
-					},{
-						title: 't13',
-						path: '/',
-					},
+					}
 				]
 			},
 			{
@@ -77,7 +74,7 @@ export class Store {
 
 	@action public getMenuList = () => {
 		runInAction(() => {
-			this.menuList = mapMenuIcon(tempMenuList)
+			this.menuList = tempMenuList.map(cell => mapMenuIcon(cell))
 		})
 	}
 }
