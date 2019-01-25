@@ -77,4 +77,8 @@ export class Store {
 			this.menuList = tempMenuList.map(cell => mapMenuIcon(cell))
 		})
 	}
+
+	public logout = () => {
+		location.replace('/')
+	}
 }

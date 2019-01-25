@@ -1,20 +1,29 @@
 import { IMenu } from "../../components/menuList/menuList";
 
-export interface home {
-	anchorEl: 						any
-	title:								string
-	barDrawerOpenStyle:		string
-	mainDrawerOpenStyle:	string
-	drawerOpenStyle:			string
-	isDrawerOpen:					boolean
-	menuList:							IMenu[][]
-	handleDrawer:					() => void
-	onMenuClose:					() => void
-	onMenuOpen:						(event: any) => void
-	changeTitle:					(title: string) => void
-	getMenuList:					() => void
+export interface IHome extends IAppBar, IDrawer {
+	mainDrawerOpenStyle: 	string
+	getMenuList: 					() => void
 }
 
-export interface homeState {
+export interface IHomeState {
 	menuList: IMenu[][]
+}
+
+export interface IDrawer {
+	menuList: 				IMenu[][]
+	isDrawerOpen: 		boolean
+	drawerOpenStyle: 	string
+	handleDrawer: 		() => void
+	changeTitle: 			(title: string) => void
+}
+
+export interface IAppBar {
+	title:								string
+	barDrawerOpenStyle: 	string
+	isDrawerOpen: 				boolean
+	anchorEl: 						any
+	handleDrawer:					() => void
+	logout:								() => void
+	onMenuClose:					() => void
+	onMenuOpen:						(event: any) => void
 }
