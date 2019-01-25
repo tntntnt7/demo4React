@@ -48,6 +48,7 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 				{ data.map(cell => {
 						const selected = this.selected == cell.title
 						const hasChild = cell.subMenuList && cell.subMenuList.length > 0
+						const both = this.switchMap.has(cell.title) && this.switchMap.get(cell.title)
 						let subList = null
 						
 						if (hasChild) {
@@ -74,8 +75,9 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 									<ListItemText inset primary={cell.title}/>
 									{ hasChild && `>` }
 								</ListItem>
-								<div className={`subList ${!(this.switchMap.has(cell.title) && this.switchMap.get(cell.title)) && 'subListHide'}`}>
-									{ this.switchMap.has(cell.title) && this.switchMap.get(cell.title) && subList }
+								<div className={`subList ${!both && 'subListHide'}`}>
+									{/* TODO 子菜单展开动画 */}
+									{ subList } 
 								</div>
 							</div>
 						)
@@ -86,7 +88,7 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 	}
 
 	public render(): JSX.Element {
-		const { className, data } = this.props
+		const { data } = this.props
 
 		return (
 			<div className='container'>

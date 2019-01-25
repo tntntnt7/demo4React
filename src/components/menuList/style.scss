@@ -23,9 +23,9 @@ $drawerWidthClose: 65px;
 	}
 
 	.subList {
-		transition: height 500ms;
+		transition: display 500ms;
 	}
 	.subListHide {
-		height: 0px;
+		display: none;
 	}
 }
