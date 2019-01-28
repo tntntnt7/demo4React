@@ -1,4 +1,4 @@
-import fetch from "../common/utils/fetch";
+import fetch from '../common/utils/fetch'
 
 
 export class TodoResource {

@@ -1,6 +1,6 @@
 import { observable, action, runInAction } from 'mobx'
-import { IMenu } from '../../components/menuList/menuList';
-import { mapMenuIcon } from '../../common/utils/dataMap';
+import { IMenu } from '../../components/menuList/menuList'
+import { mapMenuIcon } from '../../common/utils/dataMap'
 
 const tempMenuList = [[
 	{

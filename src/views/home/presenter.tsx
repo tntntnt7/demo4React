@@ -24,7 +24,6 @@ export default class Home extends React.Component<IHome, IHomeState> {
 	}
 
 	public componentWillReceiveProps(nextProps: any) {
-		console.log('componentWillReceiveProps', nextProps)
 		const { menuList } = nextProps
 		this.setState({
 			menuList: menuList

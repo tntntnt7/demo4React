@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
-import config from '../config';
+import config from '../config'
+import { Context } from '../../context'
 
 class Fetch {
 
@@ -14,7 +15,7 @@ class Fetch {
 	public get = async (path: string): Promise<any> => {
 		try {
 			const headers = {}
-			// 设置headers
+			headers[config.tokenHeadTag] = Context.token
 			const ret = await this._api.get(encodeURI(path), { headers })
 			return this._resultHandle(ret)
 		} catch (error) {
@@ -22,10 +23,10 @@ class Fetch {
 		}
 	}
 
-	public post = async (path: string, data: any):Promise<any> => {
+	public post = async (path: string, data: any): Promise<any> => {
 		try {
 			const headers = {}
-			// 设置headers
+			headers[config.tokenHeadTag] = Context.token
 			const ret = await this._api.post(encodeURI(path), data, { headers })
 			return this._resultHandle(ret)
 		} catch (error) {
@@ -33,10 +34,10 @@ class Fetch {
 		}
 	}
 
-	public put = async (path: string, data: any):Promise<any> => {
+	public put = async (path: string, data: any): Promise<any> => {
 		try {
 			const headers = {}
-			// 设置headers
+			headers[config.tokenHeadTag] = Context.token
 			const ret = await this._api.put(encodeURI(path), data, { headers })
 			return this._resultHandle(ret)
 		} catch (error) {
@@ -44,10 +45,10 @@ class Fetch {
 		}
 	}
 
-	public del = async (path: string):Promise<any> => {
+	public del = async (path: string): Promise<any> => {
 		try {
 			const headers = {}
-			// 设置headers
+			headers[config.tokenHeadTag] = Context.token
 			const ret = await this._api.delete(encodeURI(path), { headers })
 			return this._resultHandle(ret)
 		} catch (error) {
