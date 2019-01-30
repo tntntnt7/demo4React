@@ -57,6 +57,10 @@ class Fetch {
 	}
 
 	private _resultHandle = (result: any) => {
+		if (result.data) {
+			return result.data
+		}
+		console.warn('error result: ', result)
 		return result
 	}
 

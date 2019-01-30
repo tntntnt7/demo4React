@@ -1,0 +1,11 @@
+.snackItem {
+	.snack-message {
+		display: flex;
+		align-items: center;
+		font-size: 16px;
+
+		.snack-icon {
+			margin-right: 10px;
+		}
+	}
+}

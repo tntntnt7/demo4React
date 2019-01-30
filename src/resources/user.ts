@@ -1,12 +1,12 @@
 import fetch from '../common/utils/fetch'
 
+export const UserResource = {
 
-export class UserResource {
-
-	public login = async (payload: any): Promise<any> => {
+	login: async (payload: any): Promise<any> => {
 		return fetch.post(`/user/login`, payload)
+	},
+
+	register: async (payload: any): Promise<any> => {
+		return fetch.post(`/user`, payload)
 	}
-
 }
-
-export default new UserResource() as UserResource

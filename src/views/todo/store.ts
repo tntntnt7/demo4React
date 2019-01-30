@@ -1,6 +1,6 @@
 import { observable, runInAction, action } from 'mobx'
 import { IData } from './interface'
-import TodoResource from '../../resources/todo'
+import { API } from '../../resources'
 
 export class Store {
 	@observable
@@ -8,9 +8,7 @@ export class Store {
 
 	@action
 	public getTaskList = async () => {
-		console.log('getTaskList')
-		const ret = await TodoResource.getTaskList()
-		console.log('ret => ', ret)
+		const ret = await API.getTaskList()
 		runInAction(() => {
 			// this.taskList = ret
 		})
@@ -18,19 +16,19 @@ export class Store {
 
 	@action
 	public addTask = async () => {
-		const ret = await TodoResource.addTask
+		// const ret = await TodoResource.addTask
 		runInAction(() => {})
 	}
 
 	@action
 	public deleteTask = async () => {
-		const ret = await TodoResource.deleteTask
+		// const ret = await TodoResource.deleteTask
 		runInAction(() => {})
 	}
 
 	@action
 	public modifyTask = async () => {
-		const ret = await TodoResource.modifyTask
+		// const ret = await TodoResource.modifyTask
 		runInAction(() => {})
 	}
 }

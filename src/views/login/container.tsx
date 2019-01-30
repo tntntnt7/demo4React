@@ -15,8 +15,14 @@ export class LoginContainer extends React.Component<ILoginDialog, {}> {
 	public render(): JSX.Element {
 		return (
 			<Login
-				{...this.props}
-				{...this._store}
+				open={this.props.open}
+				switchDialog={this.props.switchDialog}
+				userName={this._store.userName}
+				password={this._store.password}
+				login={this._store.login}
+				register={this._store.register}
+				onUserNameChange={this._store.onUserNameChange}
+				onPasswordChange={this._store.onPasswordChange}
 			/>
 		)
 	}
