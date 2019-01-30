@@ -1,35 +1,81 @@
-import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button, Snackbar } from '@material-ui/core'
+import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button, Snackbar, InputAdornment, IconButton } from '@material-ui/core'
 import * as React from 'react'
 import { ILogin } from './interface'
 import { observer } from 'mobx-react'
 import { observable, action } from 'mobx'
 import './style.scss'
+import { VisibilityOff, Visibility } from '@material-ui/icons';
 
 @observer
 export default class Login extends React.Component<ILogin, {}> {
 
-	@observable
-	private isLogin: boolean = true
+	@observable private isLogin: boolean = true
+	@observable private userNameVerified: boolean = true
+	@observable private passwordVerified: boolean = true
+	@observable private showPassword: boolean = false
+	@observable private userName: string = ''
+	@observable private password: string = ''
+	@observable private helperText: string = ''
 
 	@action
-	public switch = (flag: boolean) => {
+	private switch = (flag: boolean) => {
 		this.isLogin = flag
+		this.userName = ''
+		this.password = ''
+		this.userNameVerified = true
+		this.passwordVerified = true
 	}
 
+	@action
+	private onUserNameChange = (event: any) => {
+		const { onUserNameChange } = this.props
+		const { value } = event.target
+
+		this.helperText = ''
+		this.userName = value
+		this.userNameVerified = Boolean(value)
+		onUserNameChange(value)
+	}
+
+	@action
+	private onPasswordChange = (event: any) => {
+		const { onPasswordChange } = this.props
+		const { value } = event.target
+
+		this.password = value
+		this.passwordVerified = Boolean(value)
+		onPasswordChange(value)
+	}
+
+	@action
 	private doLogin = async () => {
+		this.userNameVerified = Boolean(this.userName)
+		this.passwordVerified = Boolean(this.password)
+		if (!this.userNameVerified || !this.passwordVerified) { return }
+		
 		const { login, register, switchDialog } = this.props
 		this.isLogin ? await login() : await register()
 		switchDialog()
 	}
 
-	public onUserNameChange = (event: any) => {
-		const { onUserNameChange } = this.props
-		onUserNameChange(event.target.value)
+	@action
+	private checkName = async () => {
+		if (!this.isLogin) {
+			const { checkNameExist } = this.props
+			const exist = await checkNameExist()
+
+			if (exist) {
+				this.helperText = '此用户名已存在'
+				this.userNameVerified = false
+			} else {
+				this.userNameVerified = true
+			}			
+		}
 	}
 
-	public onPasswordChange = (event: any) => {
-		const { onPasswordChange } = this.props
-		onPasswordChange(event.target.value)
+	@action
+	private switchPassword = () => {
+		this.showPassword = !this.showPassword
 	}
 
 	public render(): JSX.Element {
@@ -44,7 +90,7 @@ export default class Login extends React.Component<ILogin, {}> {
 				onClose={switchDialog}
 				aria-labelledby='form-dialog-title'
 			>
-				<DialogTitle id='form-dialog-title' >
+				<DialogTitle id='form-dialog-title'>
 					<div style={{ display: 'flex', flexDirection: 'row' }}>
 						<div className={this.isLogin ? 'selected' : 'unSelected'} onClick={this.switch.bind(this, true)}>登录</div>
 						<div style={{ marginLeft: 10, marginRight: 10 }}>/</div>
@@ -59,17 +105,34 @@ export default class Login extends React.Component<ILogin, {}> {
 						autoFocus
 						margin='dense'
 						label='用户名'
-						fullWidth
-						onChange={this.onUserNameChange}
 						variant='outlined'
+						value={this.userName}
+						required = {!this.isLogin}
+						error={!this.userNameVerified}
+						onChange={this.onUserNameChange}
+						onBlur={this.checkName}
+						helperText={this.helperText}
+						style={{width: '100%'}}
 					/>
 					<TextField
 						margin='dense'
 						label='密码'
-						type='password'
-						fullWidth
-						onChange={this.onPasswordChange}
+						type={this.showPassword ? '' : 'password'}
 						variant='outlined'
+						value={this.password}
+						required = {!this.isLogin}
+						error={!this.passwordVerified}
+						onChange={this.onPasswordChange}
+						style={{width: '100%', borderColor: 'red'}}
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position='end'>
+									<IconButton onClick={this.switchPassword}>
+										{this.showPassword ? <VisibilityOff /> : <Visibility />}
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
 					/>
 				</DialogContent>
 				<DialogActions>

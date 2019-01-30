@@ -27,7 +27,7 @@ export class Store {
 			
 			if (ret.data) {
 				Context.setUser(ret.data)
-				Context.sbOnShow('success', `欢迎回来,${this.userName}`)
+				Context.sbOnShow('success', `欢迎回来, ${this.userName}`)
 			}
 		})
 	}
@@ -39,12 +39,17 @@ export class Store {
 		})
 		console.log(ret)
 		runInAction(() => {
-			ret.error && Context.sbOnShow('error', '注册失败,请重试')
+			ret.error && Context.sbOnShow('error', ret.error.message)
 	
 			if (ret.data) {
 				Context.setUser(ret.data)
 				Context.sbOnShow('success', '欢迎加入')
 			}
 		})
+	}
+
+	public checkNameExist = async (): Promise<boolean> => {
+		const ret = await API.checkNameExist(this.userName)
+		return Boolean(ret.data)
 	}
 }

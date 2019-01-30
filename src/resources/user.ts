@@ -8,5 +8,9 @@ export const UserResource = {
 
 	register: async (payload: any): Promise<any> => {
 		return fetch.post(`/user`, payload)
-	}
+	},
+
+	checkNameExist: async (payload: any): Promise<any> => {
+		return fetch.get(`/user/exist?name=${payload}`)
+	},
 }

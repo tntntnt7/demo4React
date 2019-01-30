@@ -4,13 +4,9 @@ import { observable, runInAction, action } from 'mobx'
  * 全局Store
  */
 class Store {
+	///	User
 	@observable public token: string = null
 	@observable public user: any = null
-
-	@observable public sbOpen: boolean = false
-	@observable public sbMessage: string = ''
-	@observable public sbDuration: number
-	@observable public sbVariant: 'success' | 'warning' | 'error' | 'info'
 
 	@action
 	public setUser = (user: any) => {
@@ -18,10 +14,15 @@ class Store {
 		this.token = user.accessToken
 	}
 
+	///	SnackBar
+	@observable public sbOpen: boolean = false
+	@observable public sbMessage: string = ''
+	@observable public sbDuration: number
+	@observable public sbVariant: 'success' | 'warning' | 'error' | 'info'
+
 	@action
 	public sbOnClose = () => {
 		this.sbOpen = false
-		this.sbMessage = ''
 		this.sbDuration = 2000
 	}
 

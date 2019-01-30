@@ -21,6 +21,7 @@ export class LoginContainer extends React.Component<ILoginDialog, {}> {
 				password={this._store.password}
 				login={this._store.login}
 				register={this._store.register}
+				checkNameExist={this._store.checkNameExist}
 				onUserNameChange={this._store.onUserNameChange}
 				onPasswordChange={this._store.onPasswordChange}
 			/>

@@ -8,6 +8,7 @@ export interface ILogin extends ILoginDialog {
 	password: string
 	login: () => void
 	register: () => void
+	checkNameExist: () => Promise<boolean>
 	onUserNameChange:	(text: string) => void
 	onPasswordChange:	(text: string) => void
 }

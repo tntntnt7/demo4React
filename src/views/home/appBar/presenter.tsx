@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { AppBar as NativeAppBar, Toolbar, IconButton, Button, Badge, Menu, MenuItem, Typography } from '@material-ui/core'
+import { AppBar as NativeAppBar, Toolbar, IconButton, Button, Badge, Menu, MenuItem, Typography, Tooltip } from '@material-ui/core'
 import { Menu as MenuIcon, AccountCircle } from '@material-ui/icons'
 import Search from '../../../components/search/search'
 import { LoginContainer } from '../../login'
@@ -77,12 +77,14 @@ export class AppBar extends React.Component<IAppBar, {}> {
 						</div>
 						:
 						<div>
-							<IconButton
-								color='inherit'
-								onClick={switchLoginDialog}
-							>
-								<AccountCircle/>
-							</IconButton>
+							<Tooltip title='登录/注册' placement='bottom'>
+								<IconButton
+									color='inherit'
+									onClick={switchLoginDialog}
+								>
+									<AccountCircle/>
+								</IconButton>
+							</Tooltip>
 							<LoginContainer
 								open={loginDialogOpen}
 								switchDialog={switchLoginDialog}
