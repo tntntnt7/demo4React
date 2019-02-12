@@ -44,21 +44,11 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 	}
 
 	public componentWillReceiveProps(nextProps: IMenuList): void {
-		console.log('cwrp', nextProps.open)
-		if (this.props.open !== nextProps.open) {
+		if (!nextProps.open) {
 			// TODO 有子菜单展开时, 关闭所有一级菜单
 			// ts中map无法遍历
 			// for (const item of this.switchMap.keys()) {
 			// }
-			let temp: Map<string, ISwitchMap> = new Map()
-			console.log(this.switchMap.entries().next())
-			if (this.switchMap.size > 0) {
-				let flag = false
-				while (!flag) {
-					const cell = this.switchMap.entries().next()
-					flag = cell.done
-				}
-			}
 		}
 	}
 
