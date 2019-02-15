@@ -6,13 +6,13 @@ import NotFound from '../views/notFound'
 
 
 const renderFragments = () => fragments.map((cell, index) => (
-	<Route path={cell.path} component={cell.fragment}/>
+	<Route key={index} path={cell.path} component={cell.fragment}/>
 ))
 
 const renderHome = ({ match }) => (
 	<HomeContainer>
 		{ renderFragments() }
-		<Route exact path={match.path} component={NotFound}/>
+		<Route key={-1} exact path={match.path} component={NotFound}/>
 	</HomeContainer>
 )
 
