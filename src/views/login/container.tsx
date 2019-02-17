@@ -2,10 +2,12 @@ import * as React from 'react'
 import Login from './presenter'
 import { Store } from './store'
 import { ILoginDialog } from './interface'
+import { observer } from 'mobx-react'
 
+@observer
 export class LoginContainer extends React.Component<ILoginDialog, {}> {
 
-	private _store: Store;
+	private _store: Store
 
 	constructor(props: any) {
 		super(props)

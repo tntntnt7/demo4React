@@ -1,11 +1,13 @@
 import * as React from 'react'
 import { AppBar as NativeAppBar, Toolbar, IconButton, Button, Badge, Menu, MenuItem, Typography, Tooltip } from '@material-ui/core'
 import { Menu as MenuIcon, AccountCircle } from '@material-ui/icons'
-import Search from '../../../components/search/search'
+import { observer } from 'mobx-react'
 import { LoginContainer } from '../../login'
 import { Context } from '../../../context'
 import { IAppBar } from '../interface'
+import Search from '../../../components/search/search'
 
+@observer
 export class AppBar extends React.Component<IAppBar, {}> {
 	public render(): JSX.Element {
 		const {

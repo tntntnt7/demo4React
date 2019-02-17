@@ -4,6 +4,9 @@ import { action, observable } from 'mobx'
 import { List, ListItem, ListItemIcon, ListItemText, Divider, Collapse, Tooltip } from '@material-ui/core'
 import { ExpandLess, ExpandMore } from '@material-ui/icons'
 import { history } from '../../common/utils/history'
+import { Context } from '../../context'
+import { HomeContainer } from '../../views/home'
+import { LoginContainer } from '../../views/login'
 import './style.scss'
 
 export interface IMenu {
@@ -34,6 +37,7 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 	
 	@observable private selected: string
 	@observable private switchMap: Map<string, ISwitchMap> = new Map()
+	@observable private loginDialogOpen: boolean = false
 
 	constructor(props: IMenuList) {
 		super(props)
@@ -52,7 +56,18 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 		}
 	}
 
+	@action public switchLoginDialog = () => {
+		this.loginDialogOpen = !this.loginDialogOpen
+	}
+
 	@action private handleItemClick = (menu: IMenu, hasChild: boolean, times: number) => {
+		// 检查是否登录
+		if (!Context.user) {
+			this.switchLoginDialog()
+			Context.sbOnShow('info', '请先登录')
+			return
+		}
+
 		// 重复点击item不会请求路由跳转
 		this.selected != menu.title && history.push(menu.path)
 		this.selected = menu.title
@@ -148,6 +163,10 @@ export default class MenuList extends React.Component<IMenuList, {}> {
 						</div>
 					))
 				}
+				<LoginContainer
+					open={this.loginDialogOpen}
+					switchDialog={this.switchLoginDialog}
+				/>
 			</div>
 		)
 	}

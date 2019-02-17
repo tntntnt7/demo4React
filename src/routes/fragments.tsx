@@ -7,7 +7,7 @@ export const fragments = [
 		fragment:	TodoContainer,
 	},
 	{
-		path: 		'test',
+		path: 		'/test',
 		fragment:	() => <h1>test</h1>,
 	},
 ]

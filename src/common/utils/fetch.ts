@@ -4,7 +4,7 @@ import { Context } from '../../context'
 
 class Fetch {
 
-	private _api: AxiosInstance;
+	private _api: AxiosInstance
 
 	constructor() {
 		this._api = axios.create({
@@ -58,6 +58,13 @@ class Fetch {
 
 	private _resultHandle = (result: any) => {
 		if (result.data) {
+			if (result.data.error) {
+				Context.sbOnShow('error', `${result.data.error.message}`)
+				// token失效处理
+				if ([-1000, -1001, -1002].indexOf(result.data.error.code) != -1) {
+					Context.reset()
+				}
+			}
 			return result.data
 		}
 		console.warn('error result: ', result)
@@ -65,7 +72,7 @@ class Fetch {
 	}
 
 	private _errorHandle = (error: any) => {
-		console.log(error)
+		Context.sbOnShow('error', error)
 		return error
 	}
 }

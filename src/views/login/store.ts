@@ -23,8 +23,6 @@ export class Store {
 		})
 		console.log(ret)
 		runInAction(() => {
-			ret.error && Context.sbOnShow('error', ret.error.message)
-			
 			if (ret.data) {
 				Context.setUser(ret.data)
 				Context.sbOnShow('success', `欢迎回来, ${this.userName}`)
@@ -39,8 +37,6 @@ export class Store {
 		})
 		console.log(ret)
 		runInAction(() => {
-			ret.error && Context.sbOnShow('error', ret.error.message)
-	
 			if (ret.data) {
 				Context.setUser(ret.data)
 				Context.sbOnShow('success', '欢迎加入')

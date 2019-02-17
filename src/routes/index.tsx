@@ -12,7 +12,8 @@ const renderFragments = () => fragments.map((cell, index) => (
 const renderHome = ({ match }) => (
 	<HomeContainer>
 		{ renderFragments() }
-		<Route key={-1} exact path={match.path} component={NotFound}/>
+		{/* <Route key={-1} exact path={match.path} component={NotFound}/> */}
+		<Route key={-1} exact path='/' component={() => <h1>欢迎页面</h1>}/>
 	</HomeContainer>
 )
 

@@ -2,8 +2,9 @@ import fetch from '../common/utils/fetch'
 
 export const TodoResource = {
 
-	getTaskList: async (payload?: string): Promise<any> => {
-		const url = payload ? `/todo/${payload}` : '/todo'
+	getTaskList: async (payload: any): Promise<any> => {
+		const { userId, where } = payload
+		const url = `/todo?userId=${userId}&where=${where}`
 		return fetch.get(url)
 	},
 
