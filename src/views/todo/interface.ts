@@ -1,7 +1,12 @@
-export interface IData {
-	task: string
+export interface ITodo {
+	id: number
+	cols: number
+	path: string
+	date: string
+	title: string
+	content: string
 }
-export interface todo {
-	taskList: IData[]
-	getTaskList: () => void
+export interface ITodoList {
+	todoList: ITodo[]
+	getTodoList: () => void
 }

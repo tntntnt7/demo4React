@@ -1,6 +1,7 @@
-import { IMenu } from "../../components/menuList/menuList";
+import { IMenu } from '../../components/menuList/menuList'
+import { ISnackBar } from '../../components/snackBar/snackBar'
 
-export interface IHome extends IAppBar, IDrawer {
+export interface IHome extends IAppBar, IDrawer, ISnackBar {
 	mainDrawerOpenStyle: 	string
 	getMenuList: 					() => void
 }
@@ -18,12 +19,14 @@ export interface IDrawer {
 }
 
 export interface IAppBar {
+	anchorEl: 						any
 	title:								string
 	barDrawerOpenStyle: 	string
 	isDrawerOpen: 				boolean
-	anchorEl: 						any
-	handleDrawer:					() => void
+	loginDialogOpen:			boolean
 	logout:								() => void
 	onMenuClose:					() => void
+	handleDrawer:					() => void
+	switchLoginDialog:		() => void
 	onMenuOpen:						(event: any) => void
 }

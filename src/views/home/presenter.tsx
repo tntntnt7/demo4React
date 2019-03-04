@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { IHome, IHomeState } from './interface'
-import { Drawer } from './drawer';
-import { AppBar } from './appBar';
+import { Drawer } from './drawer'
+import { AppBar } from './appBar'
+import SnackBar from '../../components/snackBar/snackBar'
 import './style.scss'
 
 export default class Home extends React.Component<IHome, IHomeState> {
@@ -24,7 +25,6 @@ export default class Home extends React.Component<IHome, IHomeState> {
 	}
 
 	public componentWillReceiveProps(nextProps: any) {
-		console.log('componentWillReceiveProps', nextProps)
 		const { menuList } = nextProps
 		this.setState({
 			menuList: menuList
@@ -41,6 +41,7 @@ export default class Home extends React.Component<IHome, IHomeState> {
 				<div className={`main ${mainDrawerOpenStyle}`}>
 					{this.props.children}
 				</div>
+				<SnackBar {...this.props} />
 			</div>
     )
 	}

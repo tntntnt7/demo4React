@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
+import { Context } from '../../context'
 import { Store } from './store'
 import Home from './presenter'
 
@@ -30,6 +31,13 @@ export class HomeContainer extends React.Component {
 				handleDrawer={this._store.handleDrawer}
 				getMenuList={this._store.getMenuList}
 				logout={this._store.logout}
+				switchLoginDialog={this._store.switchLoginDialog}
+				loginDialogOpen={this._store.loginDialogOpen}
+				sbOpen={Context.sbOpen}
+				sbDuration={Context.sbDuration}
+				sbVariant={Context.sbVariant}
+				sbMessage={Context.sbMessage}
+				sbOnClose={Context.sbOnClose}
 			/>
 		)
 	}

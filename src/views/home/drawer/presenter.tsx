@@ -30,6 +30,8 @@ export class Drawer extends React.Component<IDrawer, {}> {
 					className={`drawerList ${drawerOpenStyle}`}
 					data={menuList}
 					selected={changeTitle}
+					open={isDrawerOpen}
+					switchDrawer={handleDrawer}
 				/>
 			</NativeDrawer>
 		)

@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 import Todo from './presenter'
 import { Store } from './store'
 
+@observer
 export class TodoContainer extends React.Component {
 
 	private _store: Store;
@@ -15,8 +16,8 @@ export class TodoContainer extends React.Component {
 	public render(): JSX.Element {
 		return (
 			<Todo
-				taskList={this._store.taskList}
-				getTaskList={this._store.getTaskList}
+				todoList={this._store.todoList}
+				getTodoList={this._store.getTodoList}
 			/>
 		)
 	}

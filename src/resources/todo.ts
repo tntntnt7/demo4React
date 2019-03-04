@@ -1,24 +1,22 @@
-import fetch from "../common/utils/fetch";
+import fetch from '../common/utils/fetch'
 
+export const TodoResource = {
 
-export class TodoResource {
-
-	public getTaskList = async (payload?: string): Promise<any> => {
-		const url = payload ? `/todo/${payload}` : '/todo'
+	getTaskList: async (payload: any): Promise<any> => {
+		const { userId, where } = payload
+		const url = `/todo?userId=${userId}&where=${where}`
 		return fetch.get(url)
-	}
+	},
 
-	public addTask = async (payload: any): Promise<any> => {
+	addTask: async (payload: any): Promise<any> => {
 		return fetch.post('/todo', payload)
-	}
+	},
 
-	public deleteTask = async (payload: string): Promise<any> => {
+	deleteTask: async (payload: string): Promise<any> => {
 		return fetch.del(`/todo/${payload}`)
-	}
+	},
 
-	public modifyTask = async (payload : any): Promise<any> => {
+	modifyTask: async (payload : any): Promise<any> => {
 		return fetch.put('/todo', payload)
-	}
+	},
 }
-
-export default new TodoResource() as TodoResource

@@ -1,36 +1,40 @@
 import { observable, runInAction, action } from 'mobx'
-import { IData } from './interface'
-import TodoResource from '../../resources/todo'
+import { ITodo } from './interface'
+import { API } from '../../resources'
+import { Context } from '../../context'
 
 export class Store {
-	@observable
-	public taskList: IData[] = []
+	@observable public todoList: ITodo[] = []
 
 	@action
-	public getTaskList = async () => {
-		console.log('getTaskList')
-		const ret = await TodoResource.getTaskList()
-		console.log('ret => ', ret)
-		runInAction(() => {
-			// this.taskList = ret
+	public getTodoList = async () => {        
+		const ret = await API.getTaskList({
+			userId: Context.user.id,
+			where: null,
 		})
+		if (ret.data) {
+			runInAction(() => {
+				console.log('getTodoList', ret.data)
+				this.todoList = ret.data
+			})
+		}
 	}
 
 	@action
-	public addTask = async () => {
-		const ret = await TodoResource.addTask
+	public addTodo = async () => {
+		// const ret = await TodoResource.addTask
 		runInAction(() => {})
 	}
 
 	@action
-	public deleteTask = async () => {
-		const ret = await TodoResource.deleteTask
+	public deleteTodo = async () => {
+		// const ret = await TodoResource.deleteTask
 		runInAction(() => {})
 	}
 
 	@action
-	public modifyTask = async () => {
-		const ret = await TodoResource.modifyTask
+	public modifyTodo = async () => {
+		// const ret = await TodoResource.modifyTask
 		runInAction(() => {})
 	}
 }

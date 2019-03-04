@@ -1,9 +1,10 @@
 import axios, { AxiosInstance } from 'axios'
-import config from '../config';
+import config from '../config'
+import { Context } from '../../context'
 
 class Fetch {
 
-	private _api: AxiosInstance;
+	private _api: AxiosInstance
 
 	constructor() {
 		this._api = axios.create({
@@ -14,7 +15,7 @@ class Fetch {
 	public get = async (path: string): Promise<any> => {
 		try {
 			const headers = {}
-			// 设置headers
+			headers[config.tokenHeadTag] = Context.token
 			const ret = await this._api.get(encodeURI(path), { headers })
 			return this._resultHandle(ret)
 		} catch (error) {
@@ -22,10 +23,10 @@ class Fetch {
 		}
 	}
 
-	public post = async (path: string, data: any):Promise<any> => {
+	public post = async (path: string, data: any): Promise<any> => {
 		try {
 			const headers = {}
-			// 设置headers
+			headers[config.tokenHeadTag] = Context.token
 			const ret = await this._api.post(encodeURI(path), data, { headers })
 			return this._resultHandle(ret)
 		} catch (error) {
@@ -33,10 +34,10 @@ class Fetch {
 		}
 	}
 
-	public put = async (path: string, data: any):Promise<any> => {
+	public put = async (path: string, data: any): Promise<any> => {
 		try {
 			const headers = {}
-			// 设置headers
+			headers[config.tokenHeadTag] = Context.token
 			const ret = await this._api.put(encodeURI(path), data, { headers })
 			return this._resultHandle(ret)
 		} catch (error) {
@@ -44,10 +45,10 @@ class Fetch {
 		}
 	}
 
-	public del = async (path: string):Promise<any> => {
+	public del = async (path: string): Promise<any> => {
 		try {
 			const headers = {}
-			// 设置headers
+			headers[config.tokenHeadTag] = Context.token
 			const ret = await this._api.delete(encodeURI(path), { headers })
 			return this._resultHandle(ret)
 		} catch (error) {
@@ -56,11 +57,22 @@ class Fetch {
 	}
 
 	private _resultHandle = (result: any) => {
+		if (result.data) {
+			if (result.data.error) {
+				Context.sbOnShow('error', `${result.data.error.message}`)
+				// token失效处理
+				if ([-1000, -1001, -1002].indexOf(result.data.error.code) != -1) {
+					Context.reset()
+				}
+			}
+			return result.data
+		}
+		console.warn('error result: ', result)
 		return result
 	}
 
 	private _errorHandle = (error: any) => {
-		console.log(error)
+		Context.sbOnShow('error', error)
 		return error
 	}
 }

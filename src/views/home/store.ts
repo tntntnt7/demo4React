@@ -1,6 +1,7 @@
 import { observable, action, runInAction } from 'mobx'
-import { IMenu } from '../../components/menuList/menuList';
-import { mapMenuIcon } from '../../common/utils/dataMap';
+import { IMenu } from '../../components/menuList/menuList'
+import { mapMenuIcon } from '../../common/utils/dataMap'
+import { Context } from '../../context'
 
 const tempMenuList = [[
 	{
@@ -52,9 +53,19 @@ export class Store {
 	@observable public barDrawerOpenStyle: string = ''
 	@observable public mainDrawerOpenStyle: string = ''
 	@observable public menuList: IMenu[][] = []
+	@observable public loginDialogOpen: boolean = false
+
+	constructor() {
+		this.title = Context.pageTitle
+	}
+
+	@action public switchLoginDialog = () => {
+		this.loginDialogOpen = !this.loginDialogOpen
+	}
 
 	@action public changeTitle = (title: string) => {
 		this.title = title
+		Context.setPageTitle(title)
 	}
 
 	@action public onMenuOpen = event => {
@@ -80,5 +91,6 @@ export class Store {
 
 	public logout = () => {
 		location.replace('/')
+		Context.reset()
 	}
 }
