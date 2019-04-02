@@ -1,0 +1,43 @@
+
+.todo-item {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	height: 100px;
+	width: 100%;
+	margin: 10px 0px;
+	padding: 10px;
+	background-color: #FFF;
+	transition-duration: 300ms;
+	transition-property: background-color;
+
+	.text {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		color: rgb(99, 99, 99);
+		font-size: 30px;
+
+		.title {
+			color: rgb(49, 49, 49);
+			font-size: 50Px;
+		}
+	}
+
+	.time {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		color: gray;
+		font-size: 20px;
+	}
+
+	.left {
+		color: bisque;
+		font-size: 100px;
+	}
+
+}
+.todo-item:hover {
+	background-color: rgba($color: rgb(2, 176, 245), $alpha: 0.25);
+}
