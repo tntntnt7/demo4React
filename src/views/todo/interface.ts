@@ -1,10 +1,10 @@
 export interface ITodo {
-	id: number
-	cols: number
-	path: string
-	date: string
-	title: string
-	content: string
+	id:					string
+	title:			string
+	content:		string
+	createTime: string
+	endTime:		string
+	done:				number
 }
 export interface ITodoList {
 	todoList: ITodo[]
