@@ -18,7 +18,9 @@ export default class TodoItem extends React.Component<ITodoItem, {}> {
 
 	public componentWillMount(): void {
 		const { endTime } = this.props
-		// new Date()
+		const end = new Date(endTime)
+		const now = new Date()
+		console.log(now.getTime() - end.getTime())
 	}
 
 	public render(): JSX.Element {
