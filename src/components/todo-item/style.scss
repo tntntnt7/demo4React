@@ -1,46 +1,67 @@
 
 .todo-item {
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100px;
-	width: 100%;
-	margin: 10px 0px;
-	padding: 10px;
-	background-color: #FFF;
-	transition-duration: 300ms;
-	transition-property: background-color;
+	height: 180px;
+	width: 98%;
+	z-index: 0;
+	margin-bottom: 10px;
 
-	.text {
-		flex: 1;
+	.left-indicator {
+		height: 180px;
+		width: 15px;
+	}
+
+	.content {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
-		color: rgb(99, 99, 99);
-		font-size: 30px;
+		justify-content: center;
+		align-items: center;
+		height: 150px;
+		width: 98%;
+		margin: 20px 0px;
+		
+		.head {
+			height: 30px;
+			width: 100%;
+			display: flex;
+			padding-left: 20px;	
+			align-items: center;
+			font-size: 0.8em;
+		}
 
-		.title {
-			color: rgb(49, 49, 49);
-			font-size: 50Px;
+		.body {
+			flex-grow: 1;
+			display: flex;
+			width: 100%;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: flex-start;
+			padding-left: 20px;
+			color: rgb(99, 99, 99);
+			font-size: 30px;
+
+			.title {
+				color: rgb(49, 49, 49);
+				font-size: 2em;
+			}
+		}
+
+		.footer {
+			height: 30px;
+			width: 100%;
+			padding-left: 20px;
+		}
+
+		.left {
+			color: bisque;
+			font-size: 100px;
+			margin: 0 20px;
 		}
 	}
 
-	.time {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		color: gray;
-		font-size: 20px;
-		margin: 0 20px;
-	}
-
-	.left {
-		color: bisque;
-		font-size: 100px;
-		margin: 0 20px;
-	}
-
 }
+
 .todo-item:hover {
-	background-color: rgba($color: rgb(2, 176, 245), $alpha: 0.25);
+	z-index: 10;
+	background-color: rgba(117, 223, 255, 0.63);
 }
