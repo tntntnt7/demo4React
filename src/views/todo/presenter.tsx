@@ -1,27 +1,27 @@
 import * as React from 'react'
-import { Fab, Tabs, Tab, AppBar, GridList, GridListTile, List } from '@material-ui/core'
+import { Fab, Tabs, Tab, AppBar, GridList, GridListTile, List, Icon } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
 import { observer } from 'mobx-react'
 import { observable, action } from 'mobx'
 import './style.scss'
-import { ITodoList, ITodo } from './interface'
+import { ITodoList, ITodo, IPayload } from './interface'
 import { Context } from '../../context'
 import TodoItem from '../../components/todo-item';
+import { TodoMake } from './todo-make';
 @observer
 export default class Todo extends React.Component<ITodoList, {}> {
 
 	@observable private tab: number = 0
+	@observable private todoMakeShow: boolean = false
+	@observable private payload: IPayload = {
+		title: '',
+		content: '',
+		date: new Date(),
+	}
 
 	public componentWillMount() {
 		Context.token && this.props.getTodoList()
 	}
-
-	@action
-	public handleChange = (event, value) => {
-		this.tab = value
-	}
-
-	public onClick = () => {}
 
   public render(): JSX.Element {
 		const { todoList } = this.props
@@ -44,12 +44,62 @@ export default class Todo extends React.Component<ITodoList, {}> {
 								content={cell.content}
 								createTime={cell.createTime}
 								endTime={cell.endTime}
-								onClick={this.onClick}
+								done={Boolean(cell.done)}
+								onClick={null}
 							/>
 						)
 					) }
 				</div>
+				{
+					this.tab === 0 && 
+					<Fab className='float-botton' onClick={this.onClick}>
+						<Add/>
+					</Fab>
+				}
+				<TodoMake
+					open={this.todoMakeShow}
+					date={this.payload.date}
+					title={this.payload.title}
+					content={this.payload.content}
+					addTodo={this.addTodo}
+					switchDialog={this.onClick}
+					onTitleChange={this.onTitleChange}
+					onContentChange={this.onContentChange}
+					onDateChange={this.onDateChange}
+				/>
 			</div>
     )
+	}
+
+	@action
+	private handleChange = (event, value) => {
+		this.tab = value
+	}
+
+	@action
+	private onClick = () => {
+		this.todoMakeShow = !this.todoMakeShow
+	}
+
+	@action
+	private onTitleChange = (title: string) => {
+		this.payload.title = title
+	}
+
+	@action
+	private onContentChange = (content: string) => {
+		this.payload.content = content
+	}
+
+	@action
+	private onDateChange = (date: Date) => {
+		this.payload.date = date
+	}
+
+	private addTodo = () => {
+		const { addTodo } = this.props
+
+		addTodo(this.payload)
+		this.onClick()
 	}
 }

@@ -2,7 +2,7 @@
 .todo-item {
 	display: flex;
 	height: 180px;
-	width: 98%;
+	width: 100%;
 	z-index: 0;
 	margin-bottom: 10px;
 
@@ -63,5 +63,5 @@
 
 .todo-item:hover {
 	z-index: 10;
-	background-color: rgba(117, 223, 255, 0.63);
+	background-color: rgba(32, 152, 243, 0.13);
 }

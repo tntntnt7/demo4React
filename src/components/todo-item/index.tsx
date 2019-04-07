@@ -9,6 +9,7 @@ interface ITodoItem {
 	content:		string
 	createTime: string
 	endTime:		string
+	done:				boolean
 	onClick:		() => void
 }
 
@@ -41,10 +42,10 @@ export default class TodoItem extends React.Component<ITodoItem, {}> {
 	}
 
 	public render(): JSX.Element {
-		const { title, content, createTime, endTime, onClick } = this.props
+		const { title, content, createTime, endTime, done, onClick } = this.props
 		return (
 			<div className='todo-item' onClick={onClick}>
-				<div className='left-indicator' style={{backgroundColor: this.leftColor}}/>
+				{ !done && <div className='left-indicator' style={{backgroundColor: this.leftColor}}/>}
 				<div className='content'>
 					<div className='head'>
 						{ `${formatDate(createTime)} / ${formatDate(endTime)}` }

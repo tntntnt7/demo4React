@@ -88,9 +88,9 @@ export default class Login extends React.Component<ILogin, {}> {
 			<Dialog
 				open={open}
 				onClose={switchDialog}
-				aria-labelledby='form-dialog-title'
+				aria-labelledby='dialog-login'
 			>
-				<DialogTitle id='form-dialog-title'>
+				<DialogTitle id='dialog-login'>
 					<div style={{ display: 'flex', flexDirection: 'row' }}>
 						<div className={this.isLogin ? 'selected' : 'unSelected'} onClick={this.switch.bind(this, true)}>登录</div>
 						<div style={{ marginLeft: 10, marginRight: 10 }}>/</div>

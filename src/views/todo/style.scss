@@ -19,4 +19,19 @@
 		border-width: 2px;
 		overflow-y: auto;
 	}
+
+	.float-botton {
+		right: 50px;
+		bottom: 50px;
+		position: absolute;
+		width: 70px;
+		height: 70px;
+		background-color: #2096F3;
+		color: #FFF;
+		z-index: 100;
+	}
+}
+
+.title {
+	font-size: 30px;
 }

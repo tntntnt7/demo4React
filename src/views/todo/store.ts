@@ -1,7 +1,8 @@
 import { observable, runInAction, action } from 'mobx'
-import { ITodo } from './interface'
+import { ITodo, IPayload } from './interface'
 import { API } from '../../resources'
 import { Context } from '../../context'
+import context from '../../context/context';
 
 export class Store {
 	@observable public todoList: ITodo[] = []
@@ -21,8 +22,11 @@ export class Store {
 	}
 
 	@action
-	public addTodo = async () => {
-		// const ret = await TodoResource.addTask
+	public addTodo = async (payload: IPayload) => {
+		const ret = await API.addTask({
+			...payload,
+			userId: context.user.id
+		})
 		runInAction(() => {})
 	}
 

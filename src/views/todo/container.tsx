@@ -6,18 +6,19 @@ import { Store } from './store'
 @observer
 export class TodoContainer extends React.Component {
 
-	private _store: Store;
+	private store: Store;
 
 	constructor(props: any) {
 		super(props)
-		this._store = new Store()
+		this.store = new Store()
 	}
 
 	public render(): JSX.Element {
 		return (
 			<Todo
-				todoList={this._store.todoList}
-				getTodoList={this._store.getTodoList}
+				todoList={this.store.todoList}
+				getTodoList={this.store.getTodoList}
+				addTodo={this.store.addTodo}
 			/>
 		)
 	}
