@@ -1,5 +1,5 @@
 import { IMenu } from '../../components/menuList/menuList'
-import config from '../config';
+import config from '../config'
 
 export const mapMenuIcon = (list: IMenu[]): IMenu[] => list.map(cell => {
 		cell.icon = config.menuIcon[cell.title]

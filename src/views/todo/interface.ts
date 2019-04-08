@@ -3,7 +3,7 @@ export interface ITodo {
 	title:			string
 	content:		string
 	createTime: string
-	endTime:		string
+	deadline:		string
 	done:				number
 }
 
@@ -28,5 +28,5 @@ export interface ITodoList {
 export interface IPayload {
 	title:		string
 	content:	string
-	date:			Date
+	deadline:			Date
 }

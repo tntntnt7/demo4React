@@ -1,14 +1,13 @@
 import * as React from 'react'
 import './style.scss'
-import { observer } from 'mobx-react';
-import { observable, action } from 'mobx';
-import { secondsToHMS, formatDate } from '../../common/utils/date';
+import { observer } from 'mobx-react'
+import { observable, action } from 'mobx'
 
 interface ITodoItem {
 	title:			string
 	content:		string
 	createTime: string
-	endTime:		string
+	deadline:		string
 	done:				boolean
 	onClick:		() => void
 }
@@ -21,8 +20,8 @@ export default class TodoItem extends React.Component<ITodoItem, {}> {
 
 	@action
 	public componentWillMount(): void {
-		const { endTime } = this.props
-		const end = new Date(endTime)
+		const { deadline } = this.props
+		const end = new Date(deadline)
 		const now = new Date()
 		let timediff = (end.getTime() - now.getTime())/1000/3600
 
@@ -42,13 +41,13 @@ export default class TodoItem extends React.Component<ITodoItem, {}> {
 	}
 
 	public render(): JSX.Element {
-		const { title, content, createTime, endTime, done, onClick } = this.props
+		const { title, content, createTime, deadline, done, onClick } = this.props
 		return (
 			<div className='todo-item' onClick={onClick}>
 				{ !done && <div className='left-indicator' style={{backgroundColor: this.leftColor}}/>}
 				<div className='content'>
 					<div className='head'>
-						{ `${formatDate(createTime)} / ${formatDate(endTime)}` }
+						{ `${createTime} / ${deadline}` }
 					</div>
 					<div className='body'>
 						<div className='title'>{title}</div>

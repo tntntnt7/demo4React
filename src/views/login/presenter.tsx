@@ -3,8 +3,8 @@ import * as React from 'react'
 import { ILogin } from './interface'
 import { observer } from 'mobx-react'
 import { observable, action } from 'mobx'
+import { VisibilityOff, Visibility } from '@material-ui/icons'
 import './style.scss'
-import { VisibilityOff, Visibility } from '@material-ui/icons';
 
 @observer
 export default class Login extends React.Component<ILogin, {}> {

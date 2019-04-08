@@ -6,7 +6,7 @@ import { Store } from './store'
 @observer
 export class TodoContainer extends React.Component {
 
-	private store: Store;
+	private store: Store
 
 	constructor(props: any) {
 		super(props)

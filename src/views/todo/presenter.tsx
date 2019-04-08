@@ -6,8 +6,8 @@ import { observable, action } from 'mobx'
 import './style.scss'
 import { ITodoList, ITodo, IPayload } from './interface'
 import { Context } from '../../context'
-import TodoItem from '../../components/todo-item';
-import { TodoMake } from './todo-make';
+import TodoItem from '../../components/todo-item'
+import { TodoMake } from './todo-make'
 @observer
 export default class Todo extends React.Component<ITodoList, {}> {
 
@@ -16,7 +16,7 @@ export default class Todo extends React.Component<ITodoList, {}> {
 	@observable private payload: IPayload = {
 		title: '',
 		content: '',
-		date: new Date(),
+		deadline: new Date(),
 	}
 
 	public componentWillMount() {
@@ -43,7 +43,7 @@ export default class Todo extends React.Component<ITodoList, {}> {
 								title={cell.title}
 								content={cell.content}
 								createTime={cell.createTime}
-								endTime={cell.endTime}
+								deadline={cell.deadline}
 								done={Boolean(cell.done)}
 								onClick={null}
 							/>
@@ -58,7 +58,7 @@ export default class Todo extends React.Component<ITodoList, {}> {
 				}
 				<TodoMake
 					open={this.todoMakeShow}
-					date={this.payload.date}
+					date={this.payload.deadline}
 					title={this.payload.title}
 					content={this.payload.content}
 					addTodo={this.addTodo}
@@ -93,13 +93,16 @@ export default class Todo extends React.Component<ITodoList, {}> {
 
 	@action
 	private onDateChange = (date: Date) => {
-		this.payload.date = date
+		this.payload.deadline = date
 	}
 
-	private addTodo = () => {
-		const { addTodo } = this.props
+	private addTodo = async () => {
+		const { addTodo, getTodoList } = this.props
 
-		addTodo(this.payload)
+		await addTodo(this.payload)
+		getTodoList()	// 刷新列表
+
+		// 关闭dialog
 		this.onClick()
 	}
 }

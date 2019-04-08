@@ -8,7 +8,7 @@ const variantIcon = {
   warning: 	Warning,
   error: 		Error,
   info: 		Info,
-};
+}
 
 const colors = {
   success: 	'#339638',

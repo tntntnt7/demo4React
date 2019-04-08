@@ -2,7 +2,8 @@ import { observable, runInAction, action } from 'mobx'
 import { ITodo, IPayload } from './interface'
 import { API } from '../../resources'
 import { Context } from '../../context'
-import context from '../../context/context';
+import context from '../../context/context'
+import { moveByHours } from '../../common/utils/date'
 
 export class Store {
 	@observable public todoList: ITodo[] = []
@@ -15,8 +16,14 @@ export class Store {
 		})
 		if (ret.data) {
 			runInAction(() => {
-				console.log('getTodoList', ret.data)
-				this.todoList = ret.data
+				this.todoList = ret.data.map(cell => {
+					// 数据库日期没问题,前端获取到的日期少了八小时
+					cell.createTime = moveByHours(cell.createTime)
+					cell.updateTime = moveByHours(cell.updateTime)
+					cell.deadline = moveByHours(cell.deadline)
+
+					return cell
+				})
 			})
 		}
 	}
@@ -27,6 +34,7 @@ export class Store {
 			...payload,
 			userId: context.user.id
 		})
+		console.log(ret)
 		runInAction(() => {})
 	}
 

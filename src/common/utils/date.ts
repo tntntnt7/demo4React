@@ -33,6 +33,13 @@ export const secondsToHMS = (second: number): string => {
 	return `${_f(hour)}:${_f(minute)}:${_f(second)}`
 }
 
+export const moveByHours = (time: string, hours: number = 8) => {
+	let date = new Date(time)
+	let temp = new Date(date.getTime() + 3600 * 1000 * hours)
+
+	return formatDate(temp.toString())
+}
+
 const _f = (num: number): string => {
 	if (num < 10) {
 		return `0${num}`
