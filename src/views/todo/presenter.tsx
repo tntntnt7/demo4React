@@ -46,7 +46,7 @@ export default class Todo extends React.Component<ITodoList, {}> {
 								createTime={cell.createTime}
 								deadline={cell.deadline}
 								done={Boolean(cell.done)}
-								onClick={null}
+								onClick={this.onItemClick}
 							/>
 						)
 					) }
@@ -95,6 +95,10 @@ export default class Todo extends React.Component<ITodoList, {}> {
 	@action
 	private onDateChange = (date: Date) => {
 		this.payload.deadline = date
+	}
+
+	private onItemClick = () => {
+		// TODO	点击则确认完成或放弃
 	}
 
 	private addTodo = async () => {
