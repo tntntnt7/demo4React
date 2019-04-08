@@ -2,8 +2,10 @@ import * as React from 'react'
 import './style.scss'
 import { observer } from 'mobx-react'
 import { observable, action } from 'mobx'
+import { formatDate } from '../../common/utils/date'
 
 interface ITodoItem {
+	id:					string
 	title:			string
 	content:		string
 	createTime: string
@@ -41,13 +43,14 @@ export default class TodoItem extends React.Component<ITodoItem, {}> {
 	}
 
 	public render(): JSX.Element {
-		const { title, content, createTime, deadline, done, onClick } = this.props
+		const { title, content, createTime, deadline, done, id, onClick } = this.props
 		return (
 			<div className='todo-item' onClick={onClick}>
 				{ !done && <div className='left-indicator' style={{backgroundColor: this.leftColor}}/>}
 				<div className='content'>
 					<div className='head'>
-						{ `${createTime} / ${deadline}` }
+						<div className='id'>{`No:${id}`}</div>
+						{ `${formatDate(createTime, 'yyyy-MM-dd')} / ${formatDate(deadline, 'yyyy-MM-dd')}` }
 					</div>
 					<div className='body'>
 						<div className='title'>{title}</div>

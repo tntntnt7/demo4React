@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Fab, Tabs, Tab, AppBar, GridList, GridListTile, List, Icon } from '@material-ui/core'
+import { Fab, Tabs, Tab, AppBar } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
 import { observer } from 'mobx-react'
 import { observable, action } from 'mobx'
@@ -40,6 +40,7 @@ export default class Todo extends React.Component<ITodoList, {}> {
 						(
 							<TodoItem
 								key={cell.id}
+								id={cell.id}
 								title={cell.title}
 								content={cell.content}
 								createTime={cell.createTime}
