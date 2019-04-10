@@ -1,5 +1,5 @@
 import { observable, runInAction, action } from 'mobx'
-import { ITodo, IPayload } from './interface'
+import { ITodo, IAddTodoPayload } from './interface'
 import { API } from '../../resources'
 import { Context } from '../../context'
 import context from '../../context/context'
@@ -29,24 +29,18 @@ export class Store {
 	}
 
 	@action
-	public addTodo = async (payload: IPayload) => {
+	public addTodo = async (payload: IAddTodoPayload) => {
 		const ret = await API.addTask({
 			...payload,
 			userId: context.user.id
 		})
 		console.log(ret)
-		runInAction(() => {})
 	}
 
 	@action
-	public deleteTodo = async () => {
-		// const ret = await TodoResource.deleteTask
-		runInAction(() => {})
-	}
-
-	@action
-	public modifyTodo = async () => {
-		// const ret = await TodoResource.modifyTask
+	public modifyTodo = async (payload: ITodo) => {
+		const ret = await API.modifyTask(payload)
+		console.log('ret', ret)
 		runInAction(() => {})
 	}
 }

@@ -19,6 +19,7 @@ export class TodoContainer extends React.Component {
 				todoList={this.store.todoList}
 				getTodoList={this.store.getTodoList}
 				addTodo={this.store.addTodo}
+				modifyTodo={this.store.modifyTodo}
 			/>
 		)
 	}

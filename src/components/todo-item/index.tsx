@@ -11,7 +11,7 @@ interface ITodoItem {
 	createTime: string
 	deadline:		string
 	done:				boolean
-	onClick:		() => void
+	onClick:		(id: string) => void
 }
 
 @observer
@@ -45,7 +45,7 @@ export default class TodoItem extends React.Component<ITodoItem, {}> {
 	public render(): JSX.Element {
 		const { title, content, createTime, deadline, done, id, onClick } = this.props
 		return (
-			<div className='todo-item' onClick={onClick}>
+			<div className='todo-item' onClick={onClick.bind(this, id)}>
 				{ !done && <div className='left-indicator' style={{backgroundColor: this.leftColor}}/>}
 				<div className='content'>
 					<div className='head'>
