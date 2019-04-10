@@ -12,4 +12,10 @@ export const map = {
 		'404':	<NotInterested className='icon'/>,
 		'Star': <Star className='icon'/>,
 	},
+
+	todoState: {
+		ongoing: 0,
+		done: 1,
+		giveup: -1,
+	},
 }
