@@ -22,11 +22,12 @@ export interface ITodoMake {
 export interface ITodoList {
 	todoList: ITodo[]
 	getTodoList: () => void
-	addTodo:		(payload: IPayload) => void
+	addTodo:		(payload: IAddTodoPayload) => void
+	modifyTodo: (payload: ITodo) => void
 }
 
-export interface IPayload {
+export interface IAddTodoPayload {
 	title:		string
 	content:	string
-	deadline:			Date
+	deadline:	Date
 }

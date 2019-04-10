@@ -1,19 +1,23 @@
 import * as React from 'react'
-import { Fab, Tabs, Tab, AppBar } from '@material-ui/core'
-import { Add } from '@material-ui/icons'
+import { Fab, Tabs, Tab, AppBar, Dialog, DialogTitle, Grid, DialogContent, DialogActions, Button } from '@material-ui/core'
+import { Add, Filter } from '@material-ui/icons'
 import { observer } from 'mobx-react'
 import { observable, action } from 'mobx'
 import './style.scss'
-import { ITodoList, ITodo, IPayload } from './interface'
+import { ITodoList, ITodo, IAddTodoPayload } from './interface'
 import { Context } from '../../context'
 import TodoItem from '../../components/todo-item'
 import { TodoMake } from './todo-make'
+import { renderTodoItem } from '../../components/todo-item-action';
 @observer
 export default class Todo extends React.Component<ITodoList, {}> {
 
 	@observable private tab: number = 0
 	@observable private todoMakeShow: boolean = false
-	@observable private payload: IPayload = {
+	@observable private todoItemShow: boolean = false
+	@observable private todoItem: ITodo
+
+	@observable private payload: IAddTodoPayload = {
 		title: '',
 		content: '',
 		deadline: new Date(),
@@ -32,11 +36,11 @@ export default class Todo extends React.Component<ITodoList, {}> {
 					<Tabs value={this.tab} onChange={this.handleChange}>
 						<Tab label='Flags' />
 						<Tab label='Done' />
+						<Tab label='Failed' />
 					</Tabs>
 				</AppBar>
 				<div className='list'>
-					{ todoList.map(cell => 
-						cell.done + this.tab !== 1 &&
+					{ todoList.map(cell => this.filter(cell, this.tab) &&
 						(
 							<TodoItem
 								key={cell.id}
@@ -68,6 +72,13 @@ export default class Todo extends React.Component<ITodoList, {}> {
 					onContentChange={this.onContentChange}
 					onDateChange={this.onDateChange}
 				/>
+				{ 
+					renderTodoItem({
+						title: this.todoItem && this.todoItem.title,
+						open: this.todoItemShow,
+						action: this.todoItemAction,
+					}) 
+				}
 			</div>
     )
 	}
@@ -97,8 +108,61 @@ export default class Todo extends React.Component<ITodoList, {}> {
 		this.payload.deadline = date
 	}
 
-	private onItemClick = () => {
-		// TODO	点击则确认完成或放弃
+	@action
+	private onItemClick = (id: string) => {
+		const { todoList } = this.props
+
+		const click = todoList.find(cell => cell.id === id) as ITodo
+		if (click.done != 0) {
+			return
+		}
+
+		this.todoItemShow = true		
+		this.todoItem = click
+	}
+
+	@action
+	private todoItemAction = async (type: string) => {
+		const { modifyTodo } = this.props
+		switch (type) {
+			case 'cancel':
+				this.todoItemShow = false
+				break
+			case 'giveup':
+				this.todoItem.done = -1
+				await modifyTodo(this.todoItem)
+				this.todoItemShow = false
+				break
+			case 'done':
+				this.todoItem.done = 1
+				await modifyTodo(this.todoItem)
+				this.todoItemShow = false
+				break
+		}
+	}
+
+	private filter = (cell, tab) => {
+		const isPass = new Date() > new Date(cell.deadline)
+		switch (tab) {
+			case 0:
+				if (cell.done == 0 && isPass) {
+					return false
+				}
+				break
+			case 1:
+				break
+			case 2:
+
+				break
+		}
+		let flag = cell.done == -1 && tab == 2 
+		if (!flag) {
+
+		}
+		
+		
+		console.log('flag', cell.title, flag)
+		return flag
 	}
 
 	private addTodo = async () => {
