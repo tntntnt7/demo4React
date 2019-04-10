@@ -1,14 +1,15 @@
 import * as React from 'react'
-import { Fab, Tabs, Tab, AppBar, Dialog, DialogTitle, Grid, DialogContent, DialogActions, Button } from '@material-ui/core'
-import { Add, Filter } from '@material-ui/icons'
+import { Fab, Tabs, Tab, AppBar } from '@material-ui/core'
+import { Add } from '@material-ui/icons'
 import { observer } from 'mobx-react'
 import { observable, action } from 'mobx'
-import './style.scss'
 import { ITodoList, ITodo, IAddTodoPayload } from './interface'
 import { Context } from '../../context'
-import TodoItem from '../../components/todo-item'
 import { TodoMake } from './todo-make'
-import { renderTodoItem } from '../../components/todo-item-action';
+import { renderTodoItemAction } from '../../components/todo-item-action'
+import TodoItem from '../../components/todo-item'
+import './style.scss'
+import config from '../../common/config';
 @observer
 export default class Todo extends React.Component<ITodoList, {}> {
 
@@ -49,7 +50,7 @@ export default class Todo extends React.Component<ITodoList, {}> {
 								content={cell.content}
 								createTime={cell.createTime}
 								deadline={cell.deadline}
-								done={Boolean(cell.done)}
+								done={cell.done}
 								onClick={this.onItemClick}
 							/>
 						)
@@ -73,7 +74,7 @@ export default class Todo extends React.Component<ITodoList, {}> {
 					onDateChange={this.onDateChange}
 				/>
 				{ 
-					renderTodoItem({
+					renderTodoItemAction({
 						title: this.todoItem && this.todoItem.title,
 						open: this.todoItemShow,
 						action: this.todoItemAction,
@@ -129,12 +130,12 @@ export default class Todo extends React.Component<ITodoList, {}> {
 				this.todoItemShow = false
 				break
 			case 'giveup':
-				this.todoItem.done = -1
+				this.todoItem.done = config.todoState.giveup
 				await modifyTodo(this.todoItem)
 				this.todoItemShow = false
 				break
 			case 'done':
-				this.todoItem.done = 1
+				this.todoItem.done = config.todoState.done
 				await modifyTodo(this.todoItem)
 				this.todoItemShow = false
 				break
@@ -142,27 +143,18 @@ export default class Todo extends React.Component<ITodoList, {}> {
 	}
 
 	private filter = (cell, tab) => {
+		const { ongoing, done, giveup } = config.todoState
 		const isPass = new Date() > new Date(cell.deadline)
 		switch (tab) {
 			case 0:
-				if (cell.done == 0 && isPass) {
-					return false
-				}
-				break
+				return cell.done == ongoing && !isPass
 			case 1:
-				break
+				return cell.done == done
 			case 2:
-
-				break
-		}
-		let flag = cell.done == -1 && tab == 2 
-		if (!flag) {
-
+				return cell.done == giveup
 		}
 		
-		
-		console.log('flag', cell.title, flag)
-		return flag
+		return false
 	}
 
 	private addTodo = async () => {

@@ -7,7 +7,7 @@ interface ITodoItemAction {
 	action:			(type: 'cancel' | 'giveup' | 'done') => void
 }
 
-export const renderTodoItem = (props: ITodoItemAction): JSX.Element => {
+export const renderTodoItemAction = (props: ITodoItemAction): JSX.Element => {
 	const { open, title, action } = props
 
 	return (
