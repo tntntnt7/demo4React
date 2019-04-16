@@ -3,10 +3,11 @@ const path = require('path')
 
 module.exports = {
 	entry: './src/index.tsx',
+	
 	output: {
-			filename: 'bundle.js',
-			path: path.resolve(__dirname, './dist'),
-			publicPath: 'dist'
+		filename: 'bundle.js',
+		path: path.resolve(__dirname, './dist'),
+		publicPath: 'dist'
 	},
 
 	devServer: {
@@ -24,25 +25,25 @@ module.exports = {
 	devtool: 'source-map',
 
 	resolve: {
-			extensions: ['.ts', '.tsx', '.js', '.json']
+		extensions: ['.ts', '.tsx', '.js', '.json']
 	},
 
 	module: {
-			rules: [
-					// { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
-					{ test: /\.tsx?$/, loader: 'ts-loader' },
-					{ enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
-					{ test: /\.scss$/, use: [
-						'style-loader', // creates style nodes from JS strings
-						'css-loader', 	// translates CSS into CommonJS
-						'sass-loader', 	// compiles Sass to CSS, using Node Sass by default
-					]}
-			]
+		rules: [
+			// { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+			{ test: /\.tsx?$/, use: 'ts-loader' },
+			{ enforce: 'pre', test: /\.js$/, use: 'source-map-loader' },
+			{ test: /\.scss$/, use: [
+				'style-loader', // creates style nodes from JS strings
+				'css-loader', 	// translates CSS into CommonJS
+				'sass-loader', 	// compiles Sass to CSS, using Node Sass by default
+			]}
+		]
 	},
 
 	externals: {
-			'react': 'React',
-			'react-dom': 'ReactDOM'
+		'react': 'React',
+		'react-dom': 'ReactDOM'
 	},
 
 	plugins:[

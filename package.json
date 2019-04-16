@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode development --watch",
+    "build": "webpack",
     "start": "webpack-dev-server --mode development",
     "dev-manual": "webpack --config webpack.config.js",
     "tsc-dev": "tsc -w",
