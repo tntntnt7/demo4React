@@ -2,10 +2,13 @@ const webpack = require('webpack')
 const path = require('path')
 
 module.exports = {
-	entry: './src/index.tsx',
+	entry: {
+		app: './src/index.tsx',
+		vendor: ['react', 'react-dom', 'react-router-dom']
+	},
 	
 	output: {
-		filename: 'bundle.js',
+		filename: '[name].js',
 		path: path.resolve(__dirname, './dist'),
 		publicPath: 'dist'
 	},
@@ -30,7 +33,6 @@ module.exports = {
 
 	module: {
 		rules: [
-			// { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
 			{ test: /\.tsx?$/, use: 'ts-loader' },
 			{ enforce: 'pre', test: /\.js$/, use: 'source-map-loader' },
 			{ test: /\.scss$/, use: [
@@ -47,7 +49,19 @@ module.exports = {
 	},
 
 	plugins:[
-		new webpack.HotModuleReplacementPlugin()
-	]
+		new webpack.HotModuleReplacementPlugin(),
+	],
+
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				commons: {
+					name: 'vendor',
+					chunks: "initial",
+					minChunks: 2
+				}
+			}
+		}
+	}
 
 };

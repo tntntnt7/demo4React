@@ -11,7 +11,7 @@ gulp.task('start', ['clean'], shell.task('yarn start'))
 
 gulp.task('clean', ['tslint'], async () => {
 	await del('./build', { force: true })
-	await del('./dist/bundle.js')
+	await del('./dist/*.js')
 	return true
 })
 
