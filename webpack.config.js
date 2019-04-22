@@ -1,5 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require( "clean-webpack-plugin" )
 
 module.exports = {
 	
@@ -10,9 +12,9 @@ module.exports = {
 	},
 	
 	output: {
-		filename: '[name].js',
-		path: path.resolve(__dirname, './dist'),
-		publicPath: 'dist'
+		filename: '[name].[hash].bundle.js',
+		path: path.resolve(__dirname, 'dist'),
+		// publicPath: 'dist'
 	},
 
 	devServer: {
@@ -27,7 +29,7 @@ module.exports = {
 		port: 9000
 	},
 
-	devtool: 'source-map',
+	// devtool: 'source-map',
 
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js', '.json']
@@ -52,6 +54,20 @@ module.exports = {
 
 	plugins:[
 		new webpack.HotModuleReplacementPlugin(),
+		new HtmlWebpackPlugin({
+			filename: './index.html',			// 要生成的html地址，相对于 output.path
+			template: './index.html',			// 要生成的html的模板, 相对于当前目录
+			chunks: ['app']
+		}),
+		/**
+		 * If using webpack 4+'s default configuration,
+		 * everything under <PROJECT_DIR>/dist/ will be removed.
+		 * Use cleanOnceBeforeBuildPatterns to override this behavior.
+		 *
+		 * During rebuilds, all webpack assets that are not used anymore
+		 * will be removed automatically.
+		 */
+		new CleanWebpackPlugin(),
 	],
 
 	// optimization: {
@@ -62,7 +78,9 @@ module.exports = {
 	// 				name: 'vendors',
 	// 				test: /[\\/]node_modules[\\/]/,
 	// 				chunks: 'initial',
+	// 				priority: -10,
 	// 			},
+
 	// 		}
 	// 	}
 	// }
