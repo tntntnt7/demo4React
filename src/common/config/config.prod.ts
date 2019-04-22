@@ -1,5 +1,4 @@
 export const configProd = {
-	debug: 'false',
-	apiURL: '',
-	socketURL: '',
+	apiURL: 'http://localhost:7700',
+	socketURL: 'http://localhost:7701',
 }

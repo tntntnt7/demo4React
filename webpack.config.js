@@ -2,9 +2,11 @@ const webpack = require('webpack')
 const path = require('path')
 
 module.exports = {
+	
+	mode: 'production',
+	
 	entry: {
 		app: './src/index.tsx',
-		vendor: ['react', 'react-dom', 'react-router-dom']
 	},
 	
 	output: {
@@ -52,16 +54,17 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 	],
 
-	optimization: {
-		splitChunks: {
-			cacheGroups: {
-				commons: {
-					name: 'vendor',
-					chunks: "initial",
-					minChunks: 2
-				}
-			}
-		}
-	}
+	// optimization: {
+	// 	splitChunks: {
+	// 		chunks: 'all',
+	// 		cacheGroups: {
+	// 			vendors: {
+	// 				name: 'vendors',
+	// 				test: /[\\/]node_modules[\\/]/,
+	// 				chunks: 'initial',
+	// 			},
+	// 		}
+	// 	}
+	// }
 
 };
