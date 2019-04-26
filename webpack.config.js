@@ -55,9 +55,11 @@ module.exports = {
 	plugins:[
 		new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebpackPlugin({
+			title: 'FLAG',
 			filename: './index.html',			// 要生成的html地址，相对于 output.path
-			template: './index.html',			// 要生成的html的模板, 相对于当前目录
-			chunks: ['app']
+			template: './index.html',			// 要生成的模板, 相对于当前目录
+			chunks: ['app', 'vendors'],		// entry和splitChunks中定义的key
+			favicon: './src/common/assets/images/favicon.ico',
 		}),
 		/**
 		 * If using webpack 4+'s default configuration,
@@ -70,19 +72,18 @@ module.exports = {
 		new CleanWebpackPlugin(),
 	],
 
-	// optimization: {
-	// 	splitChunks: {
-	// 		chunks: 'all',
-	// 		cacheGroups: {
-	// 			vendors: {
-	// 				name: 'vendors',
-	// 				test: /[\\/]node_modules[\\/]/,
-	// 				chunks: 'initial',
-	// 				priority: -10,
-	// 			},
-
-	// 		}
-	// 	}
-	// }
+	optimization: {
+		splitChunks: {
+			chunks: 'all',
+			cacheGroups: {
+				vendors: {
+					name: 'vendors',
+					test: /[\\/]node_modules[\\/]/,
+					chunks: 'initial',
+					priority: -10,
+				},
+			}
+		}
+	}
 
 };
