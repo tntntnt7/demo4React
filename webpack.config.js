@@ -1,7 +1,9 @@
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require( "clean-webpack-plugin" )
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
 	
@@ -39,11 +41,15 @@ module.exports = {
 		rules: [
 			{ test: /\.tsx?$/, use: 'ts-loader' },
 			{ enforce: 'pre', test: /\.js$/, use: 'source-map-loader' },
-			{ test: /\.scss$/, use: [
-				'style-loader', // creates style nodes from JS strings
-				'css-loader', 	// translates CSS into CommonJS
-				'sass-loader', 	// compiles Sass to CSS, using Node Sass by default
-			]}
+			{ test: /\.scss$/, 
+				include: [path.resolve(__dirname, 'src')], // 制定打包范围，提速
+				use: [
+					// 'style-loader', // creates style nodes from JS strings
+					MiniCssExtractPlugin.loader,
+					'css-loader', 	// translates CSS into CommonJS
+					'sass-loader', 	// compiles Sass to CSS, using Node Sass by default
+				],
+			},
 		]
 	},
 
@@ -60,6 +66,11 @@ module.exports = {
 			template: './index.html',			// 要生成的模板, 相对于当前目录
 			chunks: ['app', 'vendors'],		// entry和splitChunks中定义的key
 			favicon: './src/common/assets/images/favicon.ico',
+			minify: { 										// https://github.com/kangax/html-minifier
+				removeComments: true,
+				collapseWhitespace: true,
+				removeAttributeQuotes: true,
+			}
 		}),
 		/**
 		 * If using webpack 4+'s default configuration,
@@ -70,11 +81,15 @@ module.exports = {
 		 * will be removed automatically.
 		 */
 		new CleanWebpackPlugin(),
+		new MiniCssExtractPlugin({
+			filename: '[name].[hash].css',
+			chunkFilename: "[id].css"
+		})
 	],
 
 	optimization: {
 		splitChunks: {
-			chunks: 'all',
+			// chunks: 'all',
 			cacheGroups: {
 				vendors: {
 					name: 'vendors',
@@ -83,7 +98,10 @@ module.exports = {
 					priority: -10,
 				},
 			}
-		}
+		},
+		minimizer: [
+			new OptimizeCssAssetsWebpackPlugin(), // mode: 'production'时, 压缩生成的css
+		]
 	}
 
 };
