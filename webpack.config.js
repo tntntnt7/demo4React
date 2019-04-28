@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
 	
@@ -100,6 +101,7 @@ module.exports = {
 			}
 		},
 		minimizer: [
+			new UglifyJsPlugin(),	// js压缩, 配置minimizer插件时会覆盖默认的minimizer: true选项(会默认压缩js), 所以这里得重新配置Uglify插件
 			new OptimizeCssAssetsWebpackPlugin(), // mode: 'production'时, 压缩生成的css
 		]
 	}
