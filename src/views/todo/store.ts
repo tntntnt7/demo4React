@@ -2,8 +2,8 @@ import { observable, runInAction, action } from 'mobx'
 import { ITodo, IAddTodoPayload } from './interface'
 import { API } from '../../resources'
 import { Context } from '../../context'
-import context from '../../context/context'
 import { moveByHours } from '../../common/utils/date'
+import context from '../../context/context'
 
 export class Store {
 	@observable public todoList: ITodo[] = []
