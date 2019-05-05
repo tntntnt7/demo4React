@@ -6,9 +6,9 @@ import { observable, runInAction, action } from 'mobx'
 class Store {
 
 	constructor() {
-		this.user = window.localStorage.user && JSON.parse(window.localStorage.user)
-		this.token = window.localStorage.token || null
-		this.pageTitle = window.localStorage.pageTitle
+		this.user = window.sessionStorage.user && JSON.parse(window.sessionStorage.user)
+		this.token = window.sessionStorage.token || null
+		this.pageTitle = window.sessionStorage.pageTitle
 	}
 	
 	///	User
@@ -19,15 +19,15 @@ class Store {
 	public setUser = (user: any) => {
 		this.user = user
 		this.token = user.accessToken
-		window.localStorage.user = JSON.stringify(user)
-		window.localStorage.token = user.accessToken
+		window.sessionStorage.user = JSON.stringify(user)
+		window.sessionStorage.token = user.accessToken
 	}
 
 	@action
 	public reset = () => {
 		this.token = null
 		this.user = null
-		window.localStorage.clear()
+		window.sessionStorage.clear()
 	}
 
 	///	SnackBar
@@ -56,7 +56,7 @@ class Store {
 	@action
 	public setPageTitle = (title: string) => {
 		this.pageTitle = title
-		window.localStorage.pageTitle = title
+		window.sessionStorage.pageTitle = title
 	}
 }
 

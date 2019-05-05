@@ -13,7 +13,6 @@ import NotFound from '../views/notFound'
 // 	loading: Loading,
 // })
 
-
 const renderFragments = () => fragments.map((cell, index) => (
 	<Route key={index} path={cell.path} component={cell.fragment}/>
 ))
