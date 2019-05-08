@@ -1,4 +1,4 @@
 export const configProd = {
-	apiURL: 'http://localhost:7700',
-	socketURL: 'http://localhost:7701',
+	apiURL: 'http://106.12.21.109:7700',
+	socketURL: 'http://106.12.21.109:7701',
 }
