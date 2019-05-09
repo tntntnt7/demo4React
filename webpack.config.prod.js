@@ -38,20 +38,23 @@ module.exports = {
 		]
 	},
 
-	externals: {
-		'react': 'React',
-		'react-dom': 'ReactDOM'
-	},
+	// externals: {
+	// 	'react': 'React',
+	// 	'react-dom': 'ReactDOM',
+	// 	'react-router-dom': ['Route', 'HashRouter', 'Switch'],
+	// },
 
 	plugins:[
 		new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebpackPlugin({
 			title: 'FLAG',
-			filename: './index.html',			// 要生成的html地址，相对于 output.path
-			template: './index.html',			// 要生成的模板, 相对于当前目录
-			chunks: ['app', 'vendors'],		// entry和splitChunks中定义的key
+			filename: './index.html',									// 要生成的html地址，相对于 output.path
+			template: './index.html',									// 要生成的模板, 相对于当前目录
+			chunks: [																	// entry和splitChunks中定义的key
+				'app', 'vendors', 'react', 'socketio', 'axios', 'mobx',
+			],			
 			favicon: './src/common/assets/images/favicon.ico',
-			minify: { 										// https://github.com/kangax/html-minifier
+			minify: { 																// https://github.com/kangax/html-minifier
 				removeComments: true,
 				collapseWhitespace: true,
 				removeAttributeQuotes: true,
@@ -74,19 +77,42 @@ module.exports = {
 
 	optimization: {
 		splitChunks: {
+			chunks: 'initial',
 			cacheGroups: {
+				socketio: {
+					name: 'socketio',
+					test: /[\/]node_modules[\/]socket.io/,
+					chunks: 'initial',
+					priority: -8,
+					enforce: true,
+				},
+				axios: {
+					name: 'axios',
+					test: /[\/]node_modules[\/]axios/,
+					chunks: 'initial',
+					priority: -6,
+					enforce: true,
+				},
+				mobx: {
+					name: 'mobx',
+					test: /[\/]node_modules[\/]mobx/,
+					chunks: 'initial',
+					priority: -5,
+					enforce: true,
+				},
 				react: {
 					name: 'react',
 					test: /[\/]node_modules[\/]react/,
 					chunks: 'initial',
-					priority: -8,
+					priority: -7,
+					enforce: true,
 				},
 				vendors: {
 					name: 'vendors',
 					test: /[\/]node_modules[\/]/,
 					chunks: 'initial',
 					priority: -10,
-					enforce: true
+					enforce: true,
 				},
 			}
 		},
